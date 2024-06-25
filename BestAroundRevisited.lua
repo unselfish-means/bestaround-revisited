@@ -51,7 +51,7 @@ end
 
 
 local WOWsounds = {}
-WOWsounds[#WOWsounds+1] = 'Interface\\AddOns\\BestAroundRevisited\\sounds\\bestaround.mp3'
+WOWsounds[#WOWsounds+1] = 'Interface\\AddOns\\BestAroundRevisited\\assets\\bestaround.mp3'
 
 local soundLength = #WOWsounds
 
