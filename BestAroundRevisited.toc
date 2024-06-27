@@ -3,6 +3,6 @@
 ## Notes: You're the Best Around!
 ## Author: WIKR
 ## Version: 0.1
+## SavedVariables: BestAroundRevisitedDB
 
 BestAroundRevisited.lua
-

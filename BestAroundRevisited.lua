@@ -1,28 +1,37 @@
 -- register the addon command
-BestAround = {
-	config = {
-		achievements = true,
-		levels = true,
+if not BestAroundRevisitedDB then 
+	BestAroundRevisitedDB = {
+		config = {
+			achievements = true,
+			levels = true,
+		}
 	}
-}
+end
+
+-- BestAround = {
+-- 	config = {
+-- 		achievements = true,
+-- 		levels = true,
+-- 	}
+-- }
 
 local function updateSettings(setting, value)
-	if BestAround.config[setting] == nil then
+	if BestAroundRevisitedDB.config[setting] == nil then
 		print("BestAroundRevisited: Unknown Setting")
 		return
 	end
 
 	if value == "on" then
-		BestAround.config[setting] = true
+		BestAroundRevisitedDB.config[setting] = true
 	elseif value == "off" then
-		BestAround.config[setting] = false
+		BestAroundRevisitedDB.config[setting] = false
 	elseif value == "toggle" then
-		BestAround.config[setting] = not BestAround.config[setting]
+		BestAroundRevisitedDB.config[setting] = not BestAroundRevisitedDB.config[setting]
 	else
 		print("BestAroundRevisited: Invalid value. Use 'on', 'off', or 'toggle'.")
 	end
 
-	print("BestAroundRevisited: " .. setting .. " is now " .. (BestAround.config[setting] and "on" or "off"))
+	print("BestAroundRevisited: " .. setting .. " is now " .. (BestAroundRevisitedDB.config[setting] and "on" or "off"))
 end
 
 local SlashCommand = "/bestaround"
@@ -65,6 +74,19 @@ print('BestAroundReloaded loaded ' .. soundLength .. ' looting sounds.')
 
 
 levelFrame:SetScript("OnEvent",function(self, event, ...)
+	print("Debugging: event is " .. event)
+	print("Debugging: achievements is " .. BestAroundRevisitedDB.config.achievements)
+	print("Debugging: levels is " .. BestAroundRevisitedDB.config.levels)
+
 	local g = math.random(soundLength)
-	PlaySoundFile(WOWsounds[g], "Master")
+
+	if event == "PLAYER_LEVEL_UP" and BestAroundRevisitedDB.config.levels then
+		print("Debugging: you have leveled up!")
+		PlaySoundFile(WOWsounds[g], "Master")
+	end
+
+	if event == "ACHIEVEMENT_EARNED" and BestAroundRevisitedDB.config.achievements then
+		print("Debugging: you have earned an achievement!")
+		PlaySoundFile(WOWsounds[g], "Master")
+	end
 end)
