@@ -10,12 +10,30 @@ if not BestAroundRevisitedDB then
 end
 
 
+-- colors
+
+local colors = {}
+colors['LIGHTBLUE'] = 'cff00ccff';
+local colorOn = '\124'
+local colorOff = '\124r'
+
+local function colorize(text, color)
+	return colorOn .. colors[color] .. text .. colorOff
+end
+
+local prefix = colorize('BestAround: ', 'LIGHTBLUE')
+
+local function _print(text)
+	print(prefix .. text)
+end
+
+
 -- assets
 
 local WOWsounds = {}
 WOWsounds[#WOWsounds+1] = 'Interface\\AddOns\\BestAroundRevisited\\assets\\bestaround.mp3'
 local soundLength = #WOWsounds
-print('BestAroundReloaded: loaded ' .. soundLength .. ' looting sounds.')
+_print('loaded ' .. soundLength .. ' looting sounds.')
 
 
 -- main frame
@@ -25,9 +43,14 @@ local mainFrame = CreateFrame("Frame", "BestAroundRevisitedFrame", UIParent, "Ba
 
 -- functionality
 
+local function printUsage()
+	_print("/bestaround <achievements|levels> <on|off|toggle>")
+	_print("/bestaround help")
+end
+
 local function updateSettings(setting, value)
 	if BestAroundRevisitedDB.config[setting] == nil then
-		print("BestAroundRevisited: Unknown Setting")
+		_print("Unknown Setting")
 		return
 	end
 
@@ -38,10 +61,10 @@ local function updateSettings(setting, value)
 	elseif value == "toggle" then
 		BestAroundRevisitedDB.config[setting] = not BestAroundRevisitedDB.config[setting]
 	else
-		print("BestAroundRevisited: Invalid value. Use 'on', 'off', or 'toggle'.")
+		_print("Invalid value. Use 'on', 'off', or 'toggle'.")
 	end
 
-	print("BestAroundRevisited: " .. setting .. " is now " .. (BestAroundRevisitedDB.config[setting] and "on" or "off"))
+	_print(setting .. " is now " .. (BestAroundRevisitedDB.config[setting] and "on" or "off"))
 end
 
 
@@ -54,18 +77,16 @@ SlashCmdList["BESTAROUND"] = function(msg)
 		local command, value = msg:match("^(%S*)%s*(.-)$")
 
 		-- handle command
-		if command == "get" then
-			print("BestAroundRevisited: Settings")
+		if command == "help" then
+			printUsage()
+			_print("Settings:")
 			for k, v in pairs(BestAroundRevisitedDB.config) do
 				print(k .. ": " .. (v and "on" or "off"))
 			end
 		elseif BestAroundRevisitedDB.config[command] ~= nil then
 			updateSettings(command, value)
 		else
-			-- Print usage information
-			print("BestAround usage:")
-			print("/bestaround <achievements|levels> <on|off|toggle>")
-			print("/bestaround get")
+			printUsage()
 		end
 end
 
