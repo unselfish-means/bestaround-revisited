@@ -33,7 +33,7 @@ end
 local WOWsounds = {}
 WOWsounds[#WOWsounds+1] = 'Interface\\AddOns\\BestAroundRevisited\\assets\\bestaround.mp3'
 local soundLength = #WOWsounds
-_print('loaded ' .. soundLength .. ' looting sounds.')
+_print('loaded ' .. soundLength .. ' notification sound(s).')
 
 
 -- main frame
