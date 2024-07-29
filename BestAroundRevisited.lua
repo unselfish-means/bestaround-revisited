@@ -43,8 +43,13 @@ local mainFrame = CreateFrame("Frame", "BestAroundRevisitedFrame", UIParent, "Ba
 
 -- functionality
 
+local function playSound()
+	PlaySoundFile(WOWsounds[math.random(soundLength)], "Master")
+end
+
 local function printUsage()
 	_print("/bestaround <achievements|levels> <on|off|toggle>")
+	_print("/bestaround test")
 	_print("/bestaround help")
 end
 
@@ -83,6 +88,8 @@ SlashCmdList["BESTAROUND"] = function(msg)
 			for k, v in pairs(BestAroundRevisitedDB.config) do
 				print(k .. ": " .. (v and "on" or "off"))
 			end
+		elseif command == "test" then
+			playSound()
 		elseif BestAroundRevisitedDB.config[command] ~= nil then
 			updateSettings(command, value)
 		else
@@ -96,9 +103,9 @@ local eventListenerFrame = CreateFrame("Frame", "BestAroundRevisitedListenerFram
 
 local function eventHandler(self, event, ...)
 	if event == "PLAYER_LEVEL_UP" and BestAroundRevisitedDB.config.levels then
-		PlaySoundFile(WOWsounds[math.random(soundLength)], "Master")
+		playSound()
 	elseif event == "ACHIEVEMENT_EARNED" and BestAroundRevisitedDB.config.achievements then
-		PlaySoundFile(WOWsounds[math.random(soundLength)], "Master")
+		playSound()
 	end
 end
 
