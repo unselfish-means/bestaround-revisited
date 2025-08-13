@@ -70,6 +70,7 @@ function Event:test()
 	self:playSound(isTest)
 end
 
+-- Define events
 local Events = {
 	-- (name, event, sounds)
 	achievement = Event:new("achievement", "ACHIEVEMENT_EARNED", {sounds.BEST_AROUND}),
@@ -93,34 +94,6 @@ local prefix = colorize('BestAround: ', 'LIGHTBLUE')
 local function _print(text)
 	print(prefix .. text)
 end
-
--- main frame
-
--- local mainFrame = CreateFrame("Frame", "BestAroundRevisitedFrame", UIParent, "BasicFrameTemplateWithInset")
-
-
--- functionality
-
--- local function playSound()
--- 	PlaySoundFile(levelingSounds[math.random(levelingSoundLength)], "Master")
--- end
-
--- -- TODO: optimize
--- local function deathSound()
--- 	PlaySoundFile(deathSounds[math.random(deathlevelingSoundLength)], "Master")
--- end
-
--- local function playSoundByEvent(event)
--- 	if BestAroundRevisitedDB.config[event] then
--- 		if event == "achievements" then
--- 			PlaySoundFile(levelingSounds[math.random(#levelingSounds)], "Master")
--- 		elseif event == "levels" then
--- 			PlaySoundFile(levelingSounds[math.random(#levelingSounds)], "Master")
--- 		elseif event == "deaths" then
--- 			PlaySoundFile(deathSounds[math.random(#deathSounds)], "Master")
--- 		end
--- 	end
--- end
 
 local function printUsage()
 	_print("/bestaround <achievements|levels> <on|off|toggle>")
@@ -176,8 +149,6 @@ end
 
 -- event listener Frame
 
--- local eventListenerFrame = CreateFrame("Frame", "BestAroundRevisitedListenerFrame", UIParent)
-
 local function eventHandler(self, event, ...)
 	if event == Events.level.event and Events.level.isEnabled() then
 		Events.level:playSound(true)
@@ -191,8 +162,5 @@ local function eventHandler(self, event, ...)
 end
 
 eventListenerFrame:SetScript("OnEvent", eventHandler)
--- eventListenerFrame:RegisterEvent("PLAYER_LEVEL_UP")
--- eventListenerFrame:RegisterEvent("ACHIEVEMENT_EARNED")
--- eventListenerFrame:RegisterEvent("PLAYER_DEAD")
 
 table.insert(UISpecialFrames, "BestAroundRevisitedFrame")
