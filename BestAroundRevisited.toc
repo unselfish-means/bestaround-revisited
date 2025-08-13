@@ -1,4 +1,4 @@
-## Interface: 110005, 110007, 11506
+## Interface: 110005, 110007, 11506, 50500
 ## Title: Best Around Revisited
 ## Notes: You're the Best Around!
 ## Author: WIKR
