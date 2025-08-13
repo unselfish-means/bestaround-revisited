@@ -6,9 +6,76 @@ if not BestAroundRevisitedDB then
 			achievements = true,
 			levels = true,
 			deaths = true,
+			soundChannel = "Master"
 		}
 	}
 end
+
+
+
+-- frames
+
+local mainFrame = CreateFrame("Frame", "BestAroundRevisitedFrame", UIParent, "BasicFrameTemplateWithInset")
+local eventListenerFrame = CreateFrame("Frame", "BestAroundRevisitedListenerFrame", UIParent)
+
+
+-- Assets
+
+local sounds = {
+	BEST_AROUND = 'Interface\\AddOns\\BestAroundRevisited\\assets\\bestaround.mp3',
+	DUMB_WAYS_TO_DIE = 'Interface\\AddOns\\BestAroundRevisited\\assets\\dumbwaystodie.mp3',
+}
+
+
+-- Events
+
+local Event = {}
+Event.__index = Event
+
+function Event:new(name, event, sounds)
+	local obj = {
+		name = name,
+		event = event,
+		sounds = sounds or {}
+	}
+	eventListenerFrame:RegisterEvent(event)
+	setmetatable(obj, Event)
+	return obj
+end
+
+function Event:playSound(isTest)
+	if #self.sounds > 0 and (isTest or self:isEnabled()) then
+		PlaySoundFile(self.sounds[math.random(#self.sounds)], BestAroundRevisitedDB.config.soundChannel)
+	end
+end
+
+function Event:isEnabled()
+	return BestAroundRevisitedDB.config[self.event] == true
+end
+
+function Event:enable()
+	BestAroundRevisitedDB.config[self.event] = true
+end
+
+function Event:disable()
+	BestAroundRevisitedDB.config[self.event] = false
+end
+
+function Event:toggle()
+	BestAroundRevisitedDB.config[self.event] = not BestAroundRevisitedDB.config[self.event]
+end
+
+function Event:test()
+	local isTest = true
+	self:playSound(isTest)
+end
+
+local Events = {
+	-- (name, event, sounds)
+	achievement = Event:new("achievement", "ACHIEVEMENT_EARNED", {sounds.BEST_AROUND}),
+	level = Event:new("level", "PLAYER_LEVEL_UP", {sounds.BEST_AROUND}),
+	death = Event:new("death", "PLAYER_DEAD", {sounds.DUMB_WAYS_TO_DIE}),
+}
 
 -- colors
 
@@ -27,33 +94,33 @@ local function _print(text)
 	print(prefix .. text)
 end
 
-
--- assets
-local levelingSounds = {}
-levelingSounds[#levelingSounds+1] = 'Interface\\AddOns\\BestAroundRevisited\\assets\\bestaround.mp3'
-local levelingSoundLength = #levelingSounds
-
-local deathSounds = {}
-deathSounds[#deathSounds+1] = 'Interface\\AddOns\\BestAroundRevisited\\assets\\dumbwaystodie.mp3'
-local deathlevelingSoundLength = #deathSounds
-
-_print('loaded ' .. levelingSoundLength + deathlevelingSoundLength .. ' sound(s).')
-
 -- main frame
 
-local mainFrame = CreateFrame("Frame", "BestAroundRevisitedFrame", UIParent, "BasicFrameTemplateWithInset")
+-- local mainFrame = CreateFrame("Frame", "BestAroundRevisitedFrame", UIParent, "BasicFrameTemplateWithInset")
 
 
 -- functionality
 
-local function playSound()
-	PlaySoundFile(levelingSounds[math.random(levelingSoundLength)], "Master")
-end
+-- local function playSound()
+-- 	PlaySoundFile(levelingSounds[math.random(levelingSoundLength)], "Master")
+-- end
 
--- TODO: optimize
-local function deathSound()
-	PlaySoundFile(deathSounds[math.random(deathlevelingSoundLength)], "Master")
-end
+-- -- TODO: optimize
+-- local function deathSound()
+-- 	PlaySoundFile(deathSounds[math.random(deathlevelingSoundLength)], "Master")
+-- end
+
+-- local function playSoundByEvent(event)
+-- 	if BestAroundRevisitedDB.config[event] then
+-- 		if event == "achievements" then
+-- 			PlaySoundFile(levelingSounds[math.random(#levelingSounds)], "Master")
+-- 		elseif event == "levels" then
+-- 			PlaySoundFile(levelingSounds[math.random(#levelingSounds)], "Master")
+-- 		elseif event == "deaths" then
+-- 			PlaySoundFile(deathSounds[math.random(#deathSounds)], "Master")
+-- 		end
+-- 	end
+-- end
 
 local function printUsage()
 	_print("/bestaround <achievements|levels> <on|off|toggle>")
@@ -97,9 +164,9 @@ SlashCmdList["BESTAROUND"] = function(msg)
 				print(k .. ": " .. (v and "on" or "off"))
 			end
 		elseif command == "test" then
-			playSound()
+			Events.level:playSound(true)
 		elseif command == "testdeath" then
-			deathSound()
+			Events.death:playSound(true)
 		elseif BestAroundRevisitedDB.config[command] ~= nil then
 			updateSettings(command, value)
 		else
@@ -107,25 +174,25 @@ SlashCmdList["BESTAROUND"] = function(msg)
 		end
 end
 
--- event listener
+-- event listener Frame
 
-local eventListenerFrame = CreateFrame("Frame", "BestAroundRevisitedListenerFrame", UIParent)
+-- local eventListenerFrame = CreateFrame("Frame", "BestAroundRevisitedListenerFrame", UIParent)
 
 local function eventHandler(self, event, ...)
-	if event == "PLAYER_LEVEL_UP" and BestAroundRevisitedDB.config.levels then
-		playSound()
-	elseif event == "ACHIEVEMENT_EARNED" and BestAroundRevisitedDB.config.achievements then
-		playSound()
-	elseif event == "PLAYER_DEAD" and BestAroundRevisitedDB.config.deaths then
-		deathSound()
+	if event == Events.level.event and Events.level.isEnabled() then
+		Events.level:playSound(true)
+	elseif event == Events.achievement.event and Events.achievement.isEnabled() then
+		Events.achievement:playSound(true)
+	elseif event == Events.death.event and Events.death.isEnabled() then
+		Events.death:playSound(true)
 	else
 		_print("Unhandled event: " .. event)
 	end
 end
 
 eventListenerFrame:SetScript("OnEvent", eventHandler)
-eventListenerFrame:RegisterEvent("PLAYER_LEVEL_UP")
-eventListenerFrame:RegisterEvent("ACHIEVEMENT_EARNED")
-eventListenerFrame:RegisterEvent("PLAYER_DEAD")
+-- eventListenerFrame:RegisterEvent("PLAYER_LEVEL_UP")
+-- eventListenerFrame:RegisterEvent("ACHIEVEMENT_EARNED")
+-- eventListenerFrame:RegisterEvent("PLAYER_DEAD")
 
 table.insert(UISpecialFrames, "BestAroundRevisitedFrame")
