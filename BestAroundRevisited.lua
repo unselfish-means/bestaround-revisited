@@ -45,7 +45,7 @@ end
 
 function Event:playSound(isTest)
 	if #self.sounds > 0 and (isTest or self:isEnabled()) then
-		PlaySoundFile(self.sounds[math.random(#self.sounds)], BestAroundRevisitedDB.config.soundChannel)
+		PlaySoundFile(self.sounds[math.random(#self.sounds)], "Master")
 	end
 end
 
