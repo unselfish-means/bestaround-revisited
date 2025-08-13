@@ -5,10 +5,10 @@ if not BestAroundRevisitedDB then
 		config = {
 			achievements = true,
 			levels = true,
+			deaths = true,
 		}
 	}
 end
-
 
 -- colors
 
@@ -29,12 +29,15 @@ end
 
 
 -- assets
+local levelingSounds = {}
+levelingSounds[#levelingSounds+1] = 'Interface\\AddOns\\BestAroundRevisited\\assets\\bestaround.mp3'
+local levelingSoundLength = #levelingSounds
 
-local WOWsounds = {}
-WOWsounds[#WOWsounds+1] = 'Interface\\AddOns\\BestAroundRevisited\\assets\\bestaround.mp3'
-local soundLength = #WOWsounds
-_print('loaded ' .. soundLength .. ' notification sound(s).')
+local deathSounds = {}
+deathSounds[#deathSounds+1] = 'Interface\\AddOns\\BestAroundRevisited\\assets\\dumbwaystodie.mp3'
+local deathlevelingSoundLength = #deathSounds
 
+_print('loaded ' .. levelingSoundLength + deathlevelingSoundLength .. ' sound(s).')
 
 -- main frame
 
@@ -44,7 +47,12 @@ local mainFrame = CreateFrame("Frame", "BestAroundRevisitedFrame", UIParent, "Ba
 -- functionality
 
 local function playSound()
-	PlaySoundFile(WOWsounds[math.random(soundLength)], "Master")
+	PlaySoundFile(levelingSounds[math.random(levelingSoundLength)], "Master")
+end
+
+-- TODO: optimize
+local function deathSound()
+	PlaySoundFile(deathSounds[math.random(deathlevelingSoundLength)], "Master")
 end
 
 local function printUsage()
@@ -90,6 +98,8 @@ SlashCmdList["BESTAROUND"] = function(msg)
 			end
 		elseif command == "test" then
 			playSound()
+		elseif command == "testdeath" then
+			deathSound()
 		elseif BestAroundRevisitedDB.config[command] ~= nil then
 			updateSettings(command, value)
 		else
@@ -106,11 +116,16 @@ local function eventHandler(self, event, ...)
 		playSound()
 	elseif event == "ACHIEVEMENT_EARNED" and BestAroundRevisitedDB.config.achievements then
 		playSound()
+	elseif event == "PLAYER_DEAD" and BestAroundRevisitedDB.config.deaths then
+		deathSound()
+	else
+		_print("Unhandled event: " .. event)
 	end
 end
 
 eventListenerFrame:SetScript("OnEvent", eventHandler)
 eventListenerFrame:RegisterEvent("PLAYER_LEVEL_UP")
 eventListenerFrame:RegisterEvent("ACHIEVEMENT_EARNED")
+eventListenerFrame:RegisterEvent("PLAYER_DEAD")
 
 table.insert(UISpecialFrames, "BestAroundRevisitedFrame")
