@@ -1,5 +1,5 @@
 -- init Ace3 libraries
-BestAround = AceAddon:NewAddon("BestAroundRevisited", "AceEvent-3.0", "AceConsole-3.0")
+BestAround = LibStub("AceAddon-3.0"):NewAddon("BestAroundRevisited", "AceEvent-3.0", "AceConsole-3.0")
 local AceAddon = LibStub("AceAddon-3.0")
 local AceConfig = LibStub("AceConfig-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
@@ -12,12 +12,12 @@ local AceConsole = LibStub("AceConsole-3.0")
 function BestAround:OnInitialize()
 	-- use the default profile in Options.lua
 	-- https://www.wowace.com/projects/ace3/pages/api/ace-db-3-0
-	self.db = AceDB:New("BestAroundRevisitedDB", self.defaults, true)
+	self.db = LibStub("AceDB-3.0"):New("BestAroundRevisitedDB", self.defaults, true)
 
 	-- register an options table and add it to the Blizz options window
 	-- https://www.wowace.com/projects/ace3/pages/api/ace-config-3-0
-	AceConfig:RegisterOptionsTable("BestAroundRevisited", self.options)
-	AceConfigDialog:AddToBlizOptions("BestAround_Options", "BestAround Revisited")
+	AceConfig:RegisterOptionsTable("BestAround_Options", self.options)
+	self.optionsFrame = AceConfigDialog:AddToBlizOptions("BestAround_Options", "BestAround Revisited")
 
 	-- adds a child options table (profiles panel)
 	local profiles = AceDbOptions:GetOptionsTable(self.db)
@@ -28,7 +28,37 @@ function BestAround:OnInitialize()
 	self:RegisterChatCommand("bestaround", "ChatCommand")
 	self:RegisterChatCommand("bar", "ChatCommand")
 
-	self:GetCharacterInfo()
+end
+
+function BestAround:OnEnable()
+	self:RegisterEvent("ACHIEVEMENT_EARNED")
+	self:RegisterEvent("PLAYER_LEVEL_UP")
+	self:RegisterEvent("PLAYER_DEAD")
+end
+
+function BestAround:ACHIEVEMENT_EARNED(event, id)
+	print("BestAround:" .. event)
+	print("BestAround:" .. id)
+	print("BestAround:" .. self.db.profile.soundChannel)
+	PlaySoundFile(self.db.profile.baseSoundPath .. self.db.profile.achievements.soundFiles, self.db.profile.soundChannel)
+end
+
+function BestAround:PLAYER_LEVEL_UP(event, level)
+	PlaySoundFile(self.db.profile.baseSoundPath .. self.db.profile.levels.soundFiles, self.db.profile.soundChannel)
+end
+
+function BestAround:PLAYER_DEAD(event)
+	PlaySoundFile(self.db.profile.baseSoundPath .. self.db.profile.deaths.soundFiles, self.db.profile.soundChannel)
+end
+
+function BestAround:ChatCommand(input, editbox)
+	if input == "achievement" then
+		self:ACHIEVEMENT_EARNED()
+	elseif input == "level" then
+		self:PLAYER_LEVEL_UP()
+	elseif input == "death" then
+		self:PLAYER_DEAD()
+	end
 end
 
 -- -- frames
