@@ -1,5 +1,5 @@
 -- init Ace3 libraries
-local BestAround = AceAddon:NewAddon("BestAroundRevisited", "AceEvent-3.0", "AceConsole-3.0")
+BestAround = AceAddon:NewAddon("BestAroundRevisited", "AceEvent-3.0", "AceConsole-3.0")
 local AceAddon = LibStub("AceAddon-3.0")
 local AceConfig = LibStub("AceConfig-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
