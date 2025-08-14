@@ -6,6 +6,7 @@ BestAround.sounds = {
 BestAround.defaults = {
     profile = {
         baseSoundPath = 'Interface\\AddOns\\BestAroundRevisited\\Assets\\',
+        soundChannel = "Master",
         achievements = {
             enabled = true,
             soundFiles = BestAround.sounds.BestAround,
@@ -18,7 +19,6 @@ BestAround.defaults = {
             enabled = true,
             soundFiles = BestAround.sounds.DumbWaysToDie,
         },
-        soundChannel = "Master"
     }
 }
 
@@ -31,6 +31,7 @@ BestAround.options = {
             type = "select",
             name = "Sound Channel",
             desc = "Select the sound channel",
+            order = 1,
             values = {
                 Master = "Master",
                 SFX = "SFX",
@@ -38,6 +39,11 @@ BestAround.options = {
             },
             get = function(info) return BestAround.db.profile.soundChannel end,
             set = function(info, value) BestAround.db.profile.soundChannel = value end,
+        },
+        divider = {
+            type = "description",
+            name = " ",
+            order = 2,
         },
         achievements = {
             type = "group",
