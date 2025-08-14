@@ -40,6 +40,8 @@ function BestAround:ACHIEVEMENT_EARNED(event, id)
 	print("BestAround:" .. event)
 	print("BestAround:" .. id)
 	print("BestAround:" .. self.db.profile.soundChannel)
+	print("BestAround:" .. self.db.profile.baseSoundPath)
+	print("BestAround:" .. self.db.profile.achievements.soundFiles)
 	PlaySoundFile(self.db.profile.baseSoundPath .. self.db.profile.achievements.soundFiles, self.db.profile.soundChannel)
 end
 
