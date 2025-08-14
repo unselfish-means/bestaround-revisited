@@ -10,6 +10,7 @@ BestAround.defaults = {
 BestAround.options = {
     type = "group",
     name = "BestAround Revisited",
+    handler = BestAround,
     args = {
         achievements = {
             type = "toggle",
