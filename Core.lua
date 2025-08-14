@@ -31,17 +31,13 @@ function BestAround:OnInitialize()
 end
 
 function BestAround:OnEnable()
+	self:Print("enabled")
 	self:RegisterEvent("ACHIEVEMENT_EARNED")
 	self:RegisterEvent("PLAYER_LEVEL_UP")
 	self:RegisterEvent("PLAYER_DEAD")
 end
 
 function BestAround:ACHIEVEMENT_EARNED(event, id)
-	print("BestAround:" .. event)
-	print("BestAround:" .. id)
-	print("BestAround:" .. self.db.profile.soundChannel)
-	print("BestAround:" .. self.db.profile.baseSoundPath)
-	print("BestAround:" .. self.db.profile.achievements.soundFiles)
 	PlaySoundFile(self.db.profile.baseSoundPath .. self.db.profile.achievements.soundFiles, self.db.profile.soundChannel)
 end
 
@@ -54,13 +50,17 @@ function BestAround:PLAYER_DEAD(event)
 end
 
 function BestAround:ChatCommand(input)
-	if input == "achievement" then
+	if input == "test achievement" or input == "test" then
 		self:ACHIEVEMENT_EARNED("Testing ACHIEVEMENT_EARNED")
-	elseif input == "level" then
+	elseif input == "test level" then
 		self:PLAYER_LEVEL_UP("Testing PLAYER_LEVEL_UP")
-	elseif input == "death" then
+	elseif input == "test death" then
 		self:PLAYER_DEAD("Testing PLAYER_DEAD")
 	else
 		AceConfigDialog:Open("BestAround_Options")
 	end
+end
+
+function BestAround:Print(msg)
+	print("|cFF33FF99BestAround:|r " .. msg)
 end
