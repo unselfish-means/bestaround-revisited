@@ -1,0 +1,27 @@
+{
+  "BestAroundRevisited.lua": {
+    "mtime": 1723779418.2953544,
+    "ast_hash": "b37a3094541390a4c162e427032f7d45",
+    "semantic_hash": ""
+  },
+  "BestAroundRevisited.toc": {
+    "mtime": 1723779667.6504135,
+    "ast_hash": "d12f8eaa72d1fda836620688992c93be",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1785793925.116951,
+    "ast_hash": "32594e3ef3142652f19ab61dc9dc11c3",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1719290593.6908288,
+    "ast_hash": "15d4452fdbf6fe1ab90462ad400aca83",
+    "semantic_hash": ""
+  },
+  "assets/bestaround.mp3": {
+    "mtime": 1719357205.4062366,
+    "ast_hash": "eb6978238993c352e8bf788e38a6679c",
+    "semantic_hash": ""
+  }
+}
