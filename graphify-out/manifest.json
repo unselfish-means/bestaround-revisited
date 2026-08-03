@@ -4,21 +4,6 @@
     "ast_hash": "9d89426d892704796a89e5062d64f521",
     "semantic_hash": ""
   },
-  "CLAUDE.md": {
-    "mtime": 1785794851.5672803,
-    "ast_hash": "57e7eb4c86777c7d91d0d7ed19694e02",
-    "semantic_hash": ""
-  },
-  "README.md": {
-    "mtime": 1785794811.11394,
-    "ast_hash": "89f5a7b99a96562c767fac051364aff8",
-    "semantic_hash": ""
-  },
-  "assets/bestaround.mp3": {
-    "mtime": 1719357205.4062366,
-    "ast_hash": "eb6978238993c352e8bf788e38a6679c",
-    "semantic_hash": ""
-  },
   "Core.lua": {
     "mtime": 1785794811.0852237,
     "ast_hash": "b0d7b6030192ef730ece9769eac39d0f",
@@ -249,6 +234,11 @@
     "ast_hash": "22c47a9a13c53ca074b581e78aeb6def",
     "semantic_hash": ""
   },
+  "CLAUDE.md": {
+    "mtime": 1785794851.5672803,
+    "ast_hash": "57e7eb4c86777c7d91d0d7ed19694e02",
+    "semantic_hash": ""
+  },
   "Libs/CHANGES.txt": {
     "mtime": 1785794811.1109345,
     "ast_hash": "854c53e4d0e3d60418bbcc4e0df34b40",
@@ -269,6 +259,11 @@
     "ast_hash": "449ea97fa46a7d7fb56d58700d8310ad",
     "semantic_hash": ""
   },
+  "README.md": {
+    "mtime": 1785794811.11394,
+    "ast_hash": "89f5a7b99a96562c767fac051364aff8",
+    "semantic_hash": ""
+  },
   "TODO.md": {
     "mtime": 1785794811.11494,
     "ast_hash": "4a46e1b1be2a01e76ed7cf92d5e6f250",
@@ -282,6 +277,16 @@
   "Assets/dumbwaystodie.mp3": {
     "mtime": 1785794811.0832248,
     "ast_hash": "a3a983b64928c197ddd01aef92388a24",
+    "semantic_hash": ""
+  },
+  ".claude/skills/test-addon/push-test-build.ps1": {
+    "mtime": 1785796213.2451062,
+    "ast_hash": "246f13aea6057ad24aeef98e2b014f6c",
+    "semantic_hash": ""
+  },
+  ".claude/skills/test-addon/SKILL.md": {
+    "mtime": 1785796224.4222903,
+    "ast_hash": "b6642b07a7a8d983223a3e1e438bf1ce",
     "semantic_hash": ""
   }
 }
