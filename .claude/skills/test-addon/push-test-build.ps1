@@ -26,9 +26,13 @@ $relativePaths = Get-Content $TocPath | ForEach-Object { $_.Trim() } | Where-Obj
     $_ -ne "" -and -not $_.StartsWith("#")
 }
 
-# What ships: the .toc itself, every file it lists, and Assets/ (sound files
-# referenced at runtime but never listed as a .toc load file).
-$filesToCopy = @("BestAroundRevisited.toc") + $relativePaths
+# Libs\ entries in the .toc are only each library's .xml entry point -- that
+# XML in turn <Script file="..."> a sibling .lua that is never itself listed
+# in the .toc. Copying just the .toc-listed files leaves every library's
+# actual .lua behind, so Libs\ ships as a whole directory instead, same as
+# Assets\.
+$topLevelPaths = $relativePaths | Where-Object { -not $_.StartsWith("Libs\") }
+$filesToCopy = @("BestAroundRevisited.toc") + $topLevelPaths
 
 Write-Host "Mirroring $AddonName -> $Dest"
 
@@ -46,6 +50,13 @@ foreach ($relPath in $filesToCopy) {
     New-Item -ItemType Directory -Force -Path (Split-Path $dstFile) | Out-Null
     Copy-Item $src $dstFile -Force
 }
+
+$libsSrc = Join-Path $RepoRoot "Libs"
+if (-not (Test-Path $libsSrc)) {
+    throw "Libs\ not found on disk at $libsSrc"
+}
+Copy-Item -Recurse -Force $libsSrc (Join-Path $Dest "Libs")
+Write-Host "Copied Libs\ ($((Get-ChildItem -Recurse -File $libsSrc).Count) file(s))"
 
 $assetsSrc = Join-Path $RepoRoot "Assets"
 if (Test-Path $assetsSrc) {

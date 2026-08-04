@@ -20,10 +20,15 @@ Runs [push-test-build.ps1](push-test-build.ps1), which:
    never linger and mask a packaging bug. This matters because the goal is
    to mirror what a fresh install/download would actually contain, not just
    sync a dev folder.
-3. Copies the `.toc` file itself, every file the `.toc` lists (`Core.lua`,
-   `Options.lua`, `Libs\...`), and the entire `Assets\` folder — `Assets\`
-   isn't listed in the `.toc` (it's not Lua/XML to load) but is required at
-   runtime for sound playback, so it's always included.
+3. Copies the `.toc` file itself and every top-level file the `.toc` lists
+   (`Core.lua`, `Options.lua`), then copies the entire `Libs\` and `Assets\`
+   folders wholesale. Both are handled as whole directories rather than via
+   the `.toc`'s per-file list: `Libs\` entries in the `.toc` are only each
+   library's `.xml` entry point, which in turn `<Script file="...">`s a
+   sibling `.lua` that is never itself `.toc`-listed — copying just the
+   listed files silently drops every library's actual code. `Assets\` isn't
+   `.toc`-listed at all (it's not Lua/XML to load) but is required at runtime
+   for sound playback.
 4. Prints a summary of what was copied.
 
 ## When to use
