@@ -1,0 +1,292 @@
+{
+  "BestAroundRevisited.toc": {
+    "mtime": 1785801165.2939901,
+    "ast_hash": "235f8f0695236ca77da04344d3ba1f7a",
+    "semantic_hash": ""
+  },
+  "Core.lua": {
+    "mtime": 1785794811.0852237,
+    "ast_hash": "b0d7b6030192ef730ece9769eac39d0f",
+    "semantic_hash": ""
+  },
+  "Libs/Ace3.lua": {
+    "mtime": 1785794811.0852237,
+    "ast_hash": "e398cdfef15e46e73393cf82ab0c4d0a",
+    "semantic_hash": ""
+  },
+  "Libs/Ace3.toc": {
+    "mtime": 1785794811.0862207,
+    "ast_hash": "12828948e80f6ac6e4b47b6aca1f6155",
+    "semantic_hash": ""
+  },
+  "Libs/AceAddon-3.0/AceAddon-3.0.lua": {
+    "mtime": 1785794811.0862207,
+    "ast_hash": "b6267c6f7313ce81744b2fc439675f45",
+    "semantic_hash": ""
+  },
+  "Libs/AceBucket-3.0/AceBucket-3.0.lua": {
+    "mtime": 1785794811.087221,
+    "ast_hash": "d1f751bf2990b635821deb12d1423807",
+    "semantic_hash": ""
+  },
+  "Libs/AceComm-3.0/AceComm-3.0.lua": {
+    "mtime": 1785794811.0882206,
+    "ast_hash": "489ff1d7a7b0f8b9d9100e08f66fc005",
+    "semantic_hash": ""
+  },
+  "Libs/AceComm-3.0/ChatThrottleLib.lua": {
+    "mtime": 1785794811.0882206,
+    "ast_hash": "ae979a036619aaf88a2ecad3cd4fbe24",
+    "semantic_hash": ""
+  },
+  "Libs/AceConfig-3.0/AceConfig-3.0.lua": {
+    "mtime": 1785794811.0882206,
+    "ast_hash": "e11b777b07a4b4195c68347d963b0e4b",
+    "semantic_hash": ""
+  },
+  "Libs/AceConfig-3.0/AceConfigCmd-3.0/AceConfigCmd-3.0.lua": {
+    "mtime": 1785794811.089725,
+    "ast_hash": "0972cfc471bd871c62cfc0c5ebc1ba01",
+    "semantic_hash": ""
+  },
+  "Libs/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua": {
+    "mtime": 1785794811.0907328,
+    "ast_hash": "2210be4175d9d5f64d6f2dc07330408c",
+    "semantic_hash": ""
+  },
+  "Libs/AceConfig-3.0/AceConfigRegistry-3.0/AceConfigRegistry-3.0.lua": {
+    "mtime": 1785794811.0917332,
+    "ast_hash": "4e78047731ff5e6becb2f494c925273c",
+    "semantic_hash": ""
+  },
+  "Libs/AceConsole-3.0/AceConsole-3.0.lua": {
+    "mtime": 1785794811.09274,
+    "ast_hash": "3395fe5f44c0fb2ffa8bcd0b73aacc63",
+    "semantic_hash": ""
+  },
+  "Libs/AceDB-3.0/AceDB-3.0.lua": {
+    "mtime": 1785794811.0937388,
+    "ast_hash": "881e88eacc276c3104c62deae3bef4c4",
+    "semantic_hash": ""
+  },
+  "Libs/AceDBOptions-3.0/AceDBOptions-3.0.lua": {
+    "mtime": 1785794811.0947385,
+    "ast_hash": "a1aea3370364f334fc19195460fbabb9",
+    "semantic_hash": ""
+  },
+  "Libs/AceEvent-3.0/AceEvent-3.0.lua": {
+    "mtime": 1785794811.0957386,
+    "ast_hash": "e52fb946e451b2705269a226fa98adaf",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/AceGUI-3.0.lua": {
+    "mtime": 1785794811.096738,
+    "ast_hash": "1e336c83e051d66af372afceb31f9f11",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIContainer-BlizOptionsGroup.lua": {
+    "mtime": 1785794811.0977392,
+    "ast_hash": "62ab348ad7f25636e68ed716962e8753",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIContainer-DropDownGroup.lua": {
+    "mtime": 1785794811.0977392,
+    "ast_hash": "35bbd15657bf0de86dc0839770c269f0",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIContainer-Frame.lua": {
+    "mtime": 1785794811.0977392,
+    "ast_hash": "db09462793a80e16e4de78bf594ed51e",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIContainer-InlineGroup.lua": {
+    "mtime": 1785794811.098737,
+    "ast_hash": "4a662ee88362d7efbed575d7b76c3da3",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIContainer-ScrollFrame.lua": {
+    "mtime": 1785794811.098737,
+    "ast_hash": "9b9d094668753a1e7a0ece6e6666bcaa",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIContainer-SimpleGroup.lua": {
+    "mtime": 1785794811.098737,
+    "ast_hash": "67b01f42e9d4080bc8fe922fc881287d",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIContainer-TabGroup.lua": {
+    "mtime": 1785794811.099741,
+    "ast_hash": "02d3a52cf7bc923f8f58c2b69e65a4b8",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIContainer-TreeGroup.lua": {
+    "mtime": 1785794811.099741,
+    "ast_hash": "d98c157874606ed5f03ccd7056209210",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIContainer-Window.lua": {
+    "mtime": 1785794811.1007748,
+    "ast_hash": "c92d7696809a54f999f6bbbb5089c852",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-Button.lua": {
+    "mtime": 1785794811.1007748,
+    "ast_hash": "684148cf4c5c864152dfb0e35e8b69ee",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-CheckBox.lua": {
+    "mtime": 1785794811.1017783,
+    "ast_hash": "edf356c8afe68402e3a5fa3ef07441d6",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-ColorPicker.lua": {
+    "mtime": 1785794811.1017783,
+    "ast_hash": "7cce8d27948bc28a472670733733fa1a",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown-Items.lua": {
+    "mtime": 1785794811.1017783,
+    "ast_hash": "fa010f0c712bd095fd1942aa13059abf",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-DropDown.lua": {
+    "mtime": 1785794811.1028366,
+    "ast_hash": "402b59a2dfd148ea204926c54ad0dbba",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-EditBox.lua": {
+    "mtime": 1785794811.1028366,
+    "ast_hash": "07207f618957dea56cf4c95735b9f3b0",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-Heading.lua": {
+    "mtime": 1785794811.1028366,
+    "ast_hash": "5ae701dedfc92b4e83e8e1f4fd3192d0",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-Icon.lua": {
+    "mtime": 1785794811.103837,
+    "ast_hash": "2c92f45a04b9f69400ab8127fe09bc33",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-InteractiveLabel.lua": {
+    "mtime": 1785794811.103837,
+    "ast_hash": "54553a365541eb126a7b718342c98f83",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-Keybinding.lua": {
+    "mtime": 1785794811.103837,
+    "ast_hash": "3f3f0406ac790a6f50a299dc7dafa2a8",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-Label.lua": {
+    "mtime": 1785794811.103837,
+    "ast_hash": "c9d8bb8399817eaa8c8214e5af5100f7",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-MultiLineEditBox.lua": {
+    "mtime": 1785794811.1049004,
+    "ast_hash": "6d60d5b64a20461a0cc4eec816b3b46e",
+    "semantic_hash": ""
+  },
+  "Libs/AceGUI-3.0/widgets/AceGUIWidget-Slider.lua": {
+    "mtime": 1785794811.1049004,
+    "ast_hash": "03d326d4fcedc84a57770210f507509a",
+    "semantic_hash": ""
+  },
+  "Libs/AceHook-3.0/AceHook-3.0.lua": {
+    "mtime": 1785794811.1058993,
+    "ast_hash": "54f52584c5798a486866b7dd77e631f4",
+    "semantic_hash": ""
+  },
+  "Libs/AceLocale-3.0/AceLocale-3.0.lua": {
+    "mtime": 1785794811.1069,
+    "ast_hash": "d8c5e608fdf39190d2d0c9a5cf13fc0d",
+    "semantic_hash": ""
+  },
+  "Libs/AceSerializer-3.0/AceSerializer-3.0.lua": {
+    "mtime": 1785794811.1078994,
+    "ast_hash": "095d5229f38b41228db3406320446c11",
+    "semantic_hash": ""
+  },
+  "Libs/AceTab-3.0/AceTab-3.0.lua": {
+    "mtime": 1785794811.108903,
+    "ast_hash": "b8ad0c983a15059264e8d347baabb1de",
+    "semantic_hash": ""
+  },
+  "Libs/AceTimer-3.0/AceTimer-3.0.lua": {
+    "mtime": 1785794811.1099286,
+    "ast_hash": "6887f0d52f1ad34e08d5aa7eaa839d91",
+    "semantic_hash": ""
+  },
+  "Libs/CallbackHandler-1.0/CallbackHandler-1.0.lua": {
+    "mtime": 1785794811.1119392,
+    "ast_hash": "ca73ac9ce37f23a4719a74f9026d2a1c",
+    "semantic_hash": ""
+  },
+  "Libs/LibStub/LibStub.lua": {
+    "mtime": 1785794811.11294,
+    "ast_hash": "3b6c342b2a44b36720bc8dab5648d5a2",
+    "semantic_hash": ""
+  },
+  "Options.lua": {
+    "mtime": 1785794811.11394,
+    "ast_hash": "22c47a9a13c53ca074b581e78aeb6def",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1785794851.5672803,
+    "ast_hash": "57e7eb4c86777c7d91d0d7ed19694e02",
+    "semantic_hash": ""
+  },
+  "Libs/CHANGES.txt": {
+    "mtime": 1785794811.1109345,
+    "ast_hash": "854c53e4d0e3d60418bbcc4e0df34b40",
+    "semantic_hash": ""
+  },
+  "Libs/LICENSE.txt": {
+    "mtime": 1785794811.1119392,
+    "ast_hash": "59e511a8c16e629ff882788f603992c4",
+    "semantic_hash": ""
+  },
+  "Libs/README.md": {
+    "mtime": 1785794811.11294,
+    "ast_hash": "f99ec488c3f74fce60328fe49d8d35d5",
+    "semantic_hash": ""
+  },
+  "Libs/changelog.txt": {
+    "mtime": 1785794811.11394,
+    "ast_hash": "449ea97fa46a7d7fb56d58700d8310ad",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1785794811.11394,
+    "ast_hash": "89f5a7b99a96562c767fac051364aff8",
+    "semantic_hash": ""
+  },
+  "TODO.md": {
+    "mtime": 1785794811.11494,
+    "ast_hash": "4a46e1b1be2a01e76ed7cf92d5e6f250",
+    "semantic_hash": ""
+  },
+  "Assets/bestaround.mp3": {
+    "mtime": 1785794811.0812182,
+    "ast_hash": "eb6978238993c352e8bf788e38a6679c",
+    "semantic_hash": ""
+  },
+  "Assets/dumbwaystodie.mp3": {
+    "mtime": 1785794811.0832248,
+    "ast_hash": "a3a983b64928c197ddd01aef92388a24",
+    "semantic_hash": ""
+  },
+  ".claude/skills/test-addon/push-test-build.ps1": {
+    "mtime": 1785801367.03519,
+    "ast_hash": "0c3fca5ce36c85d10d68d08cd8df6a22",
+    "semantic_hash": ""
+  },
+  ".claude/skills/test-addon/SKILL.md": {
+    "mtime": 1785801374.3896298,
+    "ast_hash": "e20897f79ce42e4dcf41d3cb1c3e40ae",
+    "semantic_hash": ""
+  }
+}
