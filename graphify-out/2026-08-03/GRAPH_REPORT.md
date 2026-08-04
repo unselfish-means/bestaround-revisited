@@ -1,16 +1,16 @@
 # Graph Report - bestaroundrevisited  (2026-08-03)
 
 ## Corpus Check
-- 51 files · ~63,677 words
+- 53 files · ~64,275 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 578 nodes · 747 edges · 51 communities (43 shown, 8 thin omitted)
+- 585 nodes · 752 edges · 53 communities (45 shown, 8 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `55a29f76`
+- Built from commit: `cac77a17`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -44,6 +44,7 @@
 - AceGUIWidget-ColorPicker.lua
 - WIKR - Best Around (Revisited)
 - TODO.md
+- Test Addon
 
 ## God Nodes (most connected - your core abstractions)
 1. `del()` - 15 edges
@@ -63,7 +64,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (51 total, 8 thin omitted)
+## Communities (53 total, 8 thin omitted)
 
 ### Community 0 - "AceConfigDialog-3.0.lua"
 Cohesion: 0.11
@@ -149,16 +150,20 @@ Nodes (3): AceTimer:ScheduleRepeatingTimer(), AceTimer:ScheduleTimer(), new()
 Cohesion: 0.29
 Nodes (5): Adding a new sound category (following the `achievements`/`levels`/`deaths` pattern), Architecture, Config model, Project overview, Testing
 
+### Community 51 - "Test Addon"
+Cohesion: 0.33
+Nodes (5): Notes, Running it, Test Addon, What it does, When to use
+
 ## Knowledge Gaps
-- **7 isolated node(s):** `Project overview`, `Architecture`, `Config model`, `Adding a new sound category (following the `achievements`/`levels`/`deaths` pattern)`, `Testing` (+2 more)
+- **11 isolated node(s):** `What it does`, `When to use`, `Running it`, `Notes`, `Project overview` (+6 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **What connects `Project overview`, `Architecture`, `Config model` to the rest of the system?**
-  _7 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `What it does`, `When to use`, `Running it` to the rest of the system?**
+  _11 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `AceConfigDialog-3.0.lua` be split into smaller, more focused modules?**
   _Cohesion score 0.10938775510204081 - nodes in this community are weakly interconnected._
 - **Should `AceGUIWidget-DropDown.lua` be split into smaller, more focused modules?**
