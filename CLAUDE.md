@@ -30,6 +30,10 @@ Settings live in `BestAround.db.profile` (an AceDB profile, so they're per-profi
 4. Register the new WoW event in `OnEnable` (`self:RegisterEvent("EVENT_NAME")`).
 5. Optionally wire a `test <category>` branch into `ChatCommand`.
 
+## Versioning
+
+Bump `## Version` in [BestAroundRevisited.toc](BestAroundRevisited.toc) whenever the addon's behavior changes (not for docs-only or tooling-only changes).
+
 ## Testing
 
 There is no automated test suite. Verification is manual: load the addon in a WoW client (see `.toc` `## Interface` versions for supported client builds), then exercise it in-game via `/bar` (opens options), `/bar test`/`test level`/`test death`, the Blizzard AddOns options panel, leveling up, earning an achievement, or dying.
