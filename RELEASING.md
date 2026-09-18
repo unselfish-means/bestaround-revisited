@@ -29,10 +29,21 @@ There is no CI or packager — every step is manual, which is fine at this size.
 4. If `Libs/` changed, check upstream's `Libs/Ace3.toc` `## Interface` line
    overlaps the clients you're targeting.
 
-## Package the zip
+## Package and publish
 
-CurseForge and manual installs need a zip whose root is the addon folder
-(`BestAroundRevisited/`), containing **only the ship list**:
+Both steps are done by the `release-addon` skill's script,
+[.claude/skills/release-addon/release.ps1](.claude/skills/release-addon/release.ps1)
+(ask Claude to "cut a release", or run it yourself). It:
+
+- reads `## Version` from the `.toc` at `origin/main` — the version is never
+  typed in, so the tag can't drift from what the addon reports;
+- refuses if that tag or release already exists (bump the version in a PR);
+- packages from `git archive`, not the working tree, so local-only files
+  can't leak in;
+- zips the **ship list only** under a `BestAroundRevisited/` root and
+  verifies it before publishing;
+- creates the GitHub release with `gh release create --target <sha>`, which
+  creates the tag for you — never pre-tag.
 
 ```
 BestAroundRevisited/
@@ -43,44 +54,28 @@ BestAroundRevisited/
   Assets/      (whole folder — not .toc-listed, needed at runtime for sounds)
 ```
 
-Nothing else: no `.claude/`, `README.md`, `RELEASING.md`, `embeds.xml`,
+Nothing else ships: no `.claude/`, `README.md`, `RELEASING.md`, `embeds.xml`,
 `graphify-out/`, or `.git`. Do **not** upload GitHub's auto-generated source
 zip — its root folder is `wow-wikr-bestaroundrevisited-<tag>/`, which the game
 won't load.
 
-Build it from the merged commit, not from a working tree, so stray local files
-can't leak in:
+Always dry-run first, then publish with a title and a notes **file** (a
+file, not a string — multi-line strings passed to `gh` on PowerShell get
+split into separate arguments):
 
 ```powershell
-$ver  = "1.6.0"
-$work = Join-Path $env:TEMP "bar-release-$ver"
-Remove-Item $work -Recurse -Force -ErrorAction SilentlyContinue
-New-Item -ItemType Directory -Path "$work\src", "$work\pkg\BestAroundRevisited" | Out-Null
-
-git archive origin/main | tar -x -C "$work\src"
-Copy-Item "$work\src\BestAroundRevisited.toc", "$work\src\Core.lua", "$work\src\Options.lua" "$work\pkg\BestAroundRevisited\"
-Copy-Item "$work\src\Libs", "$work\src\Assets" "$work\pkg\BestAroundRevisited\" -Recurse
-
-Compress-Archive -Path "$work\pkg\BestAroundRevisited" -DestinationPath "$work\BestAroundRevisited-$ver.zip" -Force
+& .\.claude\skills\release-addon\release.ps1 -DryRun
 ```
 
-Sanity-check the archive root before uploading:
-
 ```powershell
-[IO.Compression.ZipFile]::OpenRead("$work\BestAroundRevisited-$ver.zip").Entries |
-  Where-Object FullName -notmatch '/Libs/' | Select-Object -ExpandProperty FullName
+& .\.claude\skills\release-addon\release.ps1 `
+  -Title "Short description of the release" `
+  -NotesFile .\notes.md
 ```
 
-You should see `BestAroundRevisited/BestAroundRevisited.toc`, the two Lua
-files, and the two `Assets/*.mp3` — nothing at the top level.
+Notes template:
 
-## Create the GitHub release
-
-Write the notes to a file first; multi-line strings passed straight to `gh`
-on PowerShell get split into arguments.
-
-```powershell
-$notes = @'
+```markdown
 One-paragraph summary.
 
 ## Changes
@@ -91,21 +86,10 @@ Retail 12.1, Classic Beta 1.60, Classic Era 1.15, MoP Classic 5.5
 
 ## Install
 Download `BestAroundRevisited-<ver>.zip` and extract it into `Interface\AddOns\`.
-'@
-[IO.File]::WriteAllText("$work\notes.md", $notes)
-
-gh release create $ver "$work\BestAroundRevisited-$ver.zip" `
-  --target main `
-  --title "Short description of the release" `
-  --notes-file "$work\notes.md" `
-  --latest
 ```
 
-`gh release create` creates the tag on `main` for you; don't pre-tag. Verify:
-
-```powershell
-gh release view $ver --json tagName,targetCommitish,assets
-```
+The script prints the release URL and the local path of the zip to upload to
+CurseForge. Verify with `gh release view <ver> --json tagName,targetCommitish,assets`.
 
 ## Upload to CurseForge
 
