@@ -1,8 +1,8 @@
-## Interface: 110005, 110007, 11506, 50500, 120007, 120100
+## Interface: 110005, 110007, 11506, 50500, 120007, 120100, 16001
 ## Title: Best Around Revisited
 ## Notes: You're the Best Around!
 ## Author: WIKR
-## Version: 1.5.0
+## Version: 1.5.1
 ## SavedVariables: BestAroundRevisitedDB
 
 Libs\LibStub\LibStub.lua
