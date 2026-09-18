@@ -34,6 +34,8 @@ Settings live in `BestAround.db.profile` (an AceDB profile, so they're per-profi
 
 Bump `## Version` in [BestAroundRevisited.toc](BestAroundRevisited.toc) whenever the addon's behavior changes (not for docs-only or tooling-only changes).
 
+Releases are tagged with the bare version (`1.6.0`, no `v`), created with `gh release create` against `main`, and ship a `BestAroundRevisited-<ver>.zip` whose root folder is `BestAroundRevisited/` containing only the ship list (`.toc`, `Core.lua`, `Options.lua`, `Libs/`, `Assets/`). Full step-by-step, including the CurseForge upload, is in [RELEASING.md](RELEASING.md).
+
 ## Testing
 
 There is no automated test suite. Verification is manual: load the addon in a WoW client (see `.toc` `## Interface` versions for supported client builds), then exercise it in-game via `/bar` (opens options), `/bar test`/`test level`/`test death`, the Blizzard AddOns options panel, leveling up, earning an achievement, or dying.
