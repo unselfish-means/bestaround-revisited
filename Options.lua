@@ -70,7 +70,7 @@ BestAround.options = {
                     type = "execute",
                     name = "Test",
                     desc = "Play the achievement sound",
-                    func = function() BestAround:ACHIEVEMENT_EARNED("Testing ACHIEVEMENT_EARNED") end
+                    func = function() BestAround:PlayCategorySound("achievements") end
                 }
             },
         },
@@ -99,7 +99,7 @@ BestAround.options = {
                     type = "execute",
                     name = "Test",
                     desc = "Play the level-up sound",
-                    func = function() BestAround:PLAYER_LEVEL_UP("Testing PLAYER_LEVEL_UP") end
+                    func = function() BestAround:PlayCategorySound("levels") end
                 }
             },
         },
@@ -128,7 +128,7 @@ BestAround.options = {
                     type = "execute",
                     name = "Test",
                     desc = "Play the death sound",
-                    func = function() BestAround:PLAYER_DEAD("Testing PLAYER_DEAD") end
+                    func = function() BestAround:PlayCategorySound("deaths") end
                 }
             },
         },

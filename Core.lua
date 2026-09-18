@@ -37,25 +37,35 @@ function BestAround:OnEnable()
 	self:RegisterEvent("PLAYER_DEAD")
 end
 
+function BestAround:PlayCategorySound(category)
+	PlaySoundFile(self.db.profile.baseSoundPath .. self.db.profile[category].soundFiles, self.db.profile.soundChannel)
+end
+
 function BestAround:ACHIEVEMENT_EARNED(event, id)
-	PlaySoundFile(self.db.profile.baseSoundPath .. self.db.profile.achievements.soundFiles, self.db.profile.soundChannel)
+	if self.db.profile.achievements.enabled then
+		self:PlayCategorySound("achievements")
+	end
 end
 
 function BestAround:PLAYER_LEVEL_UP(event, level)
-	PlaySoundFile(self.db.profile.baseSoundPath .. self.db.profile.levels.soundFiles, self.db.profile.soundChannel)
+	if self.db.profile.levels.enabled then
+		self:PlayCategorySound("levels")
+	end
 end
 
 function BestAround:PLAYER_DEAD(event)
-	PlaySoundFile(self.db.profile.baseSoundPath .. self.db.profile.deaths.soundFiles, self.db.profile.soundChannel)
+	if self.db.profile.deaths.enabled then
+		self:PlayCategorySound("deaths")
+	end
 end
 
 function BestAround:ChatCommand(input)
 	if input == "test achievement" or input == "test" then
-		self:ACHIEVEMENT_EARNED("Testing ACHIEVEMENT_EARNED")
+		self:PlayCategorySound("achievements")
 	elseif input == "test level" then
-		self:PLAYER_LEVEL_UP("Testing PLAYER_LEVEL_UP")
+		self:PlayCategorySound("levels")
 	elseif input == "test death" then
-		self:PLAYER_DEAD("Testing PLAYER_DEAD")
+		self:PlayCategorySound("deaths")
 	else
 		AceConfigDialog:Open("BestAround_Options")
 	end
