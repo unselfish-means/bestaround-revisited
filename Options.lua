@@ -9,15 +9,15 @@ BestAround.defaults = {
         soundChannel = "Master",
         achievements = {
             enabled = true,
-            soundFiles = BestAround.sounds.BestAround,
+            soundFiles = BestAround.sounds["bestaround.mp3"],
         },
         levels = {
             enabled = true,
-            soundFiles = BestAround.sounds.BestAround,
+            soundFiles = BestAround.sounds["bestaround.mp3"],
         },
         deaths = {
             enabled = true,
-            soundFiles = BestAround.sounds.DumbWaysToDie,
+            soundFiles = BestAround.sounds["dumbwaystodie.mp3"],
         },
     }
 }
