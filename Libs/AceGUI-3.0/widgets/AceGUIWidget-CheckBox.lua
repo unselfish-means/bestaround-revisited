@@ -119,15 +119,15 @@ local methods = {
 		local check = self.check
 		self.checked = value
 		if value then
-			check:SetDesaturated(false)
+			self.check:SetDesaturated(false)
 			check:Show()
 		else
 			--Nil is the unknown tristate value
 			if self.tristate and value == nil then
-				check:SetDesaturated(true)
+				self.check:SetDesaturated(true)
 				check:Show()
 			else
-				check:SetDesaturated(false)
+				self.check:SetDesaturated(false)
 				check:Hide()
 			end
 		end
