@@ -101,7 +101,7 @@ try {
         $_ -ne "" -and -not $_.StartsWith("#")
     }
     $topLevelPaths = $relativePaths | Where-Object { -not $_.StartsWith("Libs\") }
-    $filesToCopy = @($TocName) + $topLevelPaths
+    $filesToCopy = @($TocName, "README.md") + $topLevelPaths
 
     foreach ($relPath in $filesToCopy) {
         $from = Join-Path $Src $relPath

@@ -29,7 +29,7 @@ $relativePaths = Get-Content $TocPath | ForEach-Object { $_.Trim() } | Where-Obj
 # actual .lua behind, so Libs\ ships as a whole directory instead, same as
 # Assets\.
 $topLevelPaths = $relativePaths | Where-Object { -not $_.StartsWith("Libs\") }
-$filesToCopy = @("BestAroundRevisited.toc") + $topLevelPaths
+$filesToCopy = @("BestAroundRevisited.toc", "README.md") + $topLevelPaths
 
 $libsSrc = Join-Path $RepoRoot "Libs"
 if (-not (Test-Path $libsSrc)) {
