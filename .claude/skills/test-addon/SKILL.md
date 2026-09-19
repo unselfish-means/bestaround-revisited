@@ -1,13 +1,13 @@
 ---
 name: test-addon
-description: Push a clean test build of BestAroundRevisited into the local WoW retail AddOns folder for in-game testing. Use when the user asks to test the addon, push a test build, or wants to try their changes in-game.
+description: Push a clean test build of BestAroundRevisited into the local WoW retail and classic-beta AddOns folders for in-game testing. Use when the user asks to test the addon, push a test build, or wants to try their changes in-game.
 ---
 
 # Test Addon
 
 Deploys a clean, deliberate test build of this addon into the local WoW
-retail client so it can be tested in-game. This is a manual checkpoint, not
-an auto-sync — run it when you're ready to test, not on every save.
+retail and classic-beta clients so it can be tested in-game. This is a manual
+checkpoint, not an auto-sync — run it when you're ready to test, not on every save.
 
 ## What it does
 
@@ -15,7 +15,8 @@ Runs [push-test-build.ps1](push-test-build.ps1), which:
 
 1. Reads `BestAroundRevisited.toc` and extracts the list of files it
    declares (skipping comments/directives).
-2. **Wipes** `F:\Blizzard\World of Warcraft\_retail_\Interface\AddOns\BestAroundRevisited\`
+2. For each client (`_retail_`, `_classic_beta_`), **wipes**
+   `F:\Blizzard\World of Warcraft\<client>\Interface\AddOns\BestAroundRevisited\`
    before copying anything, so stale files from a previous test build can
    never linger and mask a packaging bug. This matters because the goal is
    to mirror what a fresh install/download would actually contain, not just
@@ -51,7 +52,8 @@ have drifted apart.
 
 ## Notes
 
-- Retail only for now (`_retail_`). No Classic/PTR support.
+- Retail and classic beta only (`_retail_`, `_classic_beta_`). Add to the
+  script's `$Clients` list for other clients (Classic Era, PTR, ...).
 - If `Assets\` ever needs anything beyond audio files, or if another
   runtime dependency shows up that isn't `.toc`-listed, update the script's
   hardcoded inclusion list to match — the `.toc` alone is not a complete

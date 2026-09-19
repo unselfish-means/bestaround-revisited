@@ -1,6 +1,12 @@
 BestAround.sounds = {
     ["bestaround.mp3"] = "bestaround.mp3",
-    ["dumbwaystodie.mp3"] = "dumbwaystodie.mp3"
+    ["coffin-dance.mp3"] = "coffin-dance.mp3",
+    ["dumbwaystodie.mp3"] = "dumbwaystodie.mp3",
+    ["dumbwaystodie-hai-hai-hai.mp3"] = "dumbwaystodie-hai-hai-hai.mp3",
+    ["dumbwaystodie-outro.mp3"] = "dumbwaystodie-outro.mp3",
+    ["dumbwaystodie-short.mp3"] = "dumbwaystodie-short.mp3",
+    ["dumbwaystodie-so-many-ways.mp3"] = "dumbwaystodie-so-many-ways.mp3",
+    ["pacman-death.mp3"] = "pacman-death.mp3"
 }
 
 BestAround.defaults = {
