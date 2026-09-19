@@ -41,21 +41,54 @@ function BestAround:PlayCategorySound(category)
 	PlaySoundFile(self.db.profile.baseSoundPath .. self.db.profile[category].soundFiles, self.db.profile.soundChannel)
 end
 
+-- WoW can fire the same event more than once for a single occurrence (notably
+-- PLAYER_DEAD), which made the sound overlap itself. Ignore repeat plays of a
+-- category within this window.
+local DEBOUNCE_SECONDS = 2
+local lastPlayed = {}
+
+-- Returns true if the sound played, false if it was suppressed by the debounce.
+function BestAround:PlayCategorySoundDebounced(category)
+	local now = GetTime()
+	if lastPlayed[category] and now - lastPlayed[category] < DEBOUNCE_SECONDS then
+		return false
+	end
+	lastPlayed[category] = now
+	self:PlayCategorySound(category)
+	return true
+end
+
 function BestAround:ACHIEVEMENT_EARNED(event, id)
 	if self.db.profile.achievements.enabled then
-		self:PlayCategorySound("achievements")
+		self:PlayCategorySoundDebounced("achievements")
 	end
 end
 
 function BestAround:PLAYER_LEVEL_UP(event, level)
 	if self.db.profile.levels.enabled then
-		self:PlayCategorySound("levels")
+		self:PlayCategorySoundDebounced("levels")
 	end
 end
 
 function BestAround:PLAYER_DEAD(event)
 	if self.db.profile.deaths.enabled then
-		self:PlayCategorySound("deaths")
+		self:PlayCategorySoundDebounced("deaths")
+	end
+end
+
+-- Dev-only, unlisted: fires `count` debounced plays of `category` spaced `gap`
+-- seconds apart and reports which ones actually played.
+function BestAround:DebounceTest(category, count, gap)
+	if not (self.db.profile[category] and self.db.profile[category].soundFiles) then
+		self:Print("unknown category: " .. tostring(category))
+		return
+	end
+	self:Print(("debounce %s: %d plays, %.2fs apart, %ds window"):format(category, count, gap, DEBOUNCE_SECONDS))
+	for i = 1, count do
+		C_Timer.After((i - 1) * gap, function()
+			local played = self:PlayCategorySoundDebounced(category)
+			self:Print(("  %d/%d %s"):format(i, count, played and "played" or "suppressed"))
+		end)
 	end
 end
 
@@ -66,6 +99,10 @@ function BestAround:ChatCommand(input)
 		self:PlayCategorySound("levels")
 	elseif input == "test death" then
 		self:PlayCategorySound("deaths")
+	elseif input and input:sub(1, 8) == "debounce" then
+		-- unlisted: /bar debounce [category] [count] [gap]
+		local _, category, count, gap = strsplit(" ", input)
+		self:DebounceTest(category or "deaths", tonumber(count) or 3, tonumber(gap) or 0.25)
 	else
 		AceConfigDialog:Open("BestAround_Options")
 	end
