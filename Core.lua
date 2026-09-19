@@ -43,8 +43,8 @@ end
 
 -- WoW can fire the same event more than once for a single occurrence (notably
 -- PLAYER_DEAD), which made the sound overlap itself. Ignore repeat plays of a
--- category within this window.
-local DEBOUNCE_SECONDS = 2
+-- category within this window (measured from the last play, per category).
+local DEBOUNCE_SECONDS = 5
 local lastPlayed = {}
 
 -- Returns true if the sound played, false if it was suppressed by the debounce.
