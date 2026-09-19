@@ -13,6 +13,9 @@ function BestAround:OnInitialize()
 	-- use the default profile in Options.lua
 	-- https://www.wowace.com/projects/ace3/pages/api/ace-db-3-0
 	self.db = LibStub("AceDB-3.0"):New("BestAroundRevisitedDB", self.defaults, true)
+	self:MigrateProfile()
+	self.db.RegisterCallback(self, "OnProfileChanged", "MigrateProfile")
+	self.db.RegisterCallback(self, "OnProfileCopied", "MigrateProfile")
 
 	-- register an options table and add it to the Blizz options window
 	-- https://www.wowace.com/projects/ace3/pages/api/ace-config-3-0
@@ -37,8 +40,44 @@ function BestAround:OnEnable()
 	self:RegisterEvent("PLAYER_DEAD")
 end
 
+-- Profiles saved before 1.8.0 stored a single `soundFiles` string per category.
+-- Convert it into the `sounds` set, explicitly unchecking every other sound so
+-- the AceDB default (e.g. bestaround.mp3) does not sneak back in.
+function BestAround:MigrateProfile()
+	for _, category in ipairs({ "achievements", "levels", "deaths" }) do
+		local settings = self.db.profile[category]
+		local old = settings.soundFiles
+		if type(old) == "string" then
+			for key in pairs(self.sounds) do
+				settings.sounds[key] = (key == old)
+			end
+			settings.soundFiles = nil
+		end
+	end
+end
+
+-- Returns true if a sound was played, false if the category has none selected.
 function BestAround:PlayCategorySound(category)
-	PlaySoundFile(self.db.profile.baseSoundPath .. self.db.profile[category].soundFiles, self.db.profile.soundChannel)
+	local selected = {}
+	for key, checked in pairs(self.db.profile[category].sounds) do
+		if checked then
+			selected[#selected + 1] = key
+		end
+	end
+	if #selected == 0 then
+		return false
+	end
+	local file = selected[math.random(#selected)]
+	PlaySoundFile(self.db.profile.baseSoundPath .. file, self.db.profile.soundChannel)
+	return true
+end
+
+-- Used by the Test buttons and `/bar test ...`: unlike the event handlers,
+-- these should tell the user why nothing played.
+function BestAround:TestCategorySound(category)
+	if not self:PlayCategorySound(category) then
+		self:Print("no sounds selected for " .. category)
+	end
 end
 
 -- WoW can fire the same event more than once for a single occurrence (notably
@@ -79,7 +118,7 @@ end
 -- Dev-only, unlisted: fires `count` debounced plays of `category` spaced `gap`
 -- seconds apart and reports which ones actually played.
 function BestAround:DebounceTest(category, count, gap)
-	if not (self.db.profile[category] and self.db.profile[category].soundFiles) then
+	if not (self.db.profile[category] and self.db.profile[category].sounds) then
 		self:Print("unknown category: " .. tostring(category))
 		return
 	end
@@ -94,11 +133,11 @@ end
 
 function BestAround:ChatCommand(input)
 	if input == "test achievement" or input == "test" then
-		self:PlayCategorySound("achievements")
+		self:TestCategorySound("achievements")
 	elseif input == "test level" then
-		self:PlayCategorySound("levels")
+		self:TestCategorySound("levels")
 	elseif input == "test death" then
-		self:PlayCategorySound("deaths")
+		self:TestCategorySound("deaths")
 	elseif input and input:sub(1, 8) == "debounce" then
 		-- unlisted: /bar debounce [category] [count] [gap]
 		local _, category, count, gap = strsplit(" ", input)

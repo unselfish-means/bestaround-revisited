@@ -13,17 +13,19 @@ BestAround.defaults = {
     profile = {
         baseSoundPath = 'Interface\\AddOns\\BestAroundRevisited\\Assets\\',
         soundChannel = "Master",
+        -- `sounds` is a set of file name -> true. One is picked at random each
+        -- time the event fires; an empty set means the event plays nothing.
         achievements = {
             enabled = true,
-            soundFiles = BestAround.sounds["bestaround.mp3"],
+            sounds = { ["bestaround.mp3"] = true },
         },
         levels = {
             enabled = true,
-            soundFiles = BestAround.sounds["bestaround.mp3"],
+            sounds = { ["bestaround.mp3"] = true },
         },
         deaths = {
             enabled = true,
-            soundFiles = BestAround.sounds["dumbwaystodie.mp3"],
+            sounds = { ["dumbwaystodie.mp3"] = true },
         },
     }
 }
@@ -65,18 +67,19 @@ BestAround.options = {
                     set = function(info, value) BestAround.db.profile.achievements.enabled = value end,
                 },
                 sound = {
-                    type = "select",
-                    name = "Sound",
-                    desc = "Select the sound to play",
+                    type = "multiselect",
+                    dialogControl = "Dropdown",
+                    name = "Sounds",
+                    desc = "Select the sounds to play; one is picked at random",
                     values = BestAround.sounds,
-                    get = function(info) return BestAround.db.profile.achievements.soundFiles end,
-                    set = function(info, value) BestAround.db.profile.achievements.soundFiles = value end,
+                    get = function(info, key) return BestAround.db.profile.achievements.sounds[key] end,
+                    set = function(info, key, value) BestAround.db.profile.achievements.sounds[key] = value end,
                 },
                 testButton = {
                     type = "execute",
                     name = "Test",
                     desc = "Play the achievement sound",
-                    func = function() BestAround:PlayCategorySound("achievements") end
+                    func = function() BestAround:TestCategorySound("achievements") end
                 }
             },
         },
@@ -94,18 +97,19 @@ BestAround.options = {
                     set = function(info, value) BestAround.db.profile.levels.enabled = value end,
                 },
                 sound = {
-                    type = "select",
-                    name = "Sound",
-                    desc = "Select the sound to play on level up",
+                    type = "multiselect",
+                    dialogControl = "Dropdown",
+                    name = "Sounds",
+                    desc = "Select the sounds to play on level up; one is picked at random",
                     values = BestAround.sounds,
-                    get = function(info) return BestAround.db.profile.levels.soundFiles end,
-                    set = function(info, value) BestAround.db.profile.levels.soundFiles = value end,
+                    get = function(info, key) return BestAround.db.profile.levels.sounds[key] end,
+                    set = function(info, key, value) BestAround.db.profile.levels.sounds[key] = value end,
                 },
                 testButton = {
                     type = "execute",
                     name = "Test",
                     desc = "Play the level-up sound",
-                    func = function() BestAround:PlayCategorySound("levels") end
+                    func = function() BestAround:TestCategorySound("levels") end
                 }
             },
         },
@@ -123,18 +127,19 @@ BestAround.options = {
                     set = function(info, value) BestAround.db.profile.deaths.enabled = value end,
                 },
                 sound = {
-                    type = "select",
-                    name = "Sound",
-                    desc = "Select the sound to play on death",
+                    type = "multiselect",
+                    dialogControl = "Dropdown",
+                    name = "Sounds",
+                    desc = "Select the sounds to play on death; one is picked at random",
                     values = BestAround.sounds,
-                    get = function(info) return BestAround.db.profile.deaths.soundFiles end,
-                    set = function(info, value) BestAround.db.profile.deaths.soundFiles = value end,
+                    get = function(info, key) return BestAround.db.profile.deaths.sounds[key] end,
+                    set = function(info, key, value) BestAround.db.profile.deaths.sounds[key] = value end,
                 },
                 testButton = {
                     type = "execute",
                     name = "Test",
                     desc = "Play the death sound",
-                    func = function() BestAround:PlayCategorySound("deaths") end
+                    func = function() BestAround:TestCategorySound("deaths") end
                 }
             },
         },
