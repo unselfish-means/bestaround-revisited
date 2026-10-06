@@ -41,7 +41,7 @@ Put the `.mp3` in `Assets/` and add it to `BestAround.sounds` in [Options.lua](O
 
 Bump `## Version` in [BestAroundRevisited.toc](BestAroundRevisited.toc) whenever the addon's behavior changes (not for docs-only or tooling-only changes).
 
-Releases are tagged with the bare version (`1.6.0`, no `v`), created with `gh release create` against `main`, and ship a `BestAroundRevisited-<ver>.zip` whose root folder is `BestAroundRevisited/` containing only the ship list (`.toc`, `Core.lua`, `Options.lua`, `Libs/`, `Assets/`). The `release-addon` skill (`.claude/skills/release-addon/release.ps1`) does the packaging and `gh release create`; full step-by-step, including the CurseForge upload, is in [RELEASING.md](RELEASING.md).
+Releases are tagged with the bare version (`1.6.0`, no `v`) and ship a `BestAroundRevisited-<ver>.zip` whose root folder is `BestAroundRevisited/` containing only the ship list (`.toc`, `Core.lua`, `Options.lua`, `README.md`, `Libs/`, `Assets/`). The `release-addon` skill (`.claude/skills/release-addon/release.ps1`) packages the zip, pushes the tag, and creates the GitHub release. The tag push runs [.github/workflows/release.yml](.github/workflows/release.yml), which uploads to CurseForge with the BigWigs packager following [.pkgmeta](.pkgmeta). Full step-by-step is in [RELEASING.md](RELEASING.md).
 
 ## Testing
 

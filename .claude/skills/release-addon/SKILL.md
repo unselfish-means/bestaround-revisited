@@ -1,15 +1,17 @@
 ---
 name: release-addon
-description: Cut a GitHub release of BestAroundRevisited from main — packages a CurseForge-ready zip and tags it with the .toc version. Use when the user asks to release, cut a release, publish a version, or make a CurseForge build.
+description: Cut a release of BestAroundRevisited from main — pushes a tag with the .toc version (which runs the workflow that uploads it to CurseForge) and publishes a GitHub release with a zip. Use when the user asks to release, cut a release, publish a version, or make a CurseForge build.
 ---
 
 # Release Addon
 
-Publishes the addon at `origin/main` as a GitHub release via
-[release.ps1](release.ps1). The release is tagged with the `## Version` from
-the `.toc` (bare, no `v`) and carries a `BestAroundRevisited-<ver>.zip` whose
-root folder is `BestAroundRevisited/` with only the ship list inside — the
-file the user then uploads to CurseForge by hand. Full conventions live in
+Publishes the addon at `origin/main` via [release.ps1](release.ps1). It pushes
+a tag with the `## Version` from the `.toc` (bare, no `v`). That push runs the
+[Package and release](../../../.github/workflows/release.yml) workflow, which
+packages the tag following [.pkgmeta](../../../.pkgmeta) and uploads it to
+CurseForge. The script also publishes a GitHub release on the tag with a
+`BestAroundRevisited-<ver>.zip` whose root folder is `BestAroundRevisited/`
+with only the ship list inside. Full conventions live in
 [RELEASING.md](../../../RELEASING.md); this skill is the executable half.
 
 A release is outward-facing and not cleanly reversible (tags stay, CurseForge
@@ -71,13 +73,24 @@ sees it). **Always dry-run first and get an explicit yes before the real run.**
        -NotesFile "<path>\notes.md"
    ```
 
-   `gh release create` creates the tag on the target commit itself — never
-   pre-tag.
+   The script tags the commit and pushes the tag itself — never pre-tag.
+   It pushes the tag with `git` rather than letting `gh` create it, so the
+   tag push starts the workflow.
 
-6. **Report.** Give the user the release URL and the local zip path the
-   script prints, and remind them the CurseForge upload is manual (game
-   versions = every build in the `.toc`'s `## Interface` line; a brand-new
-   client build may not be in CurseForge's picker yet).
+6. **Check the upload.** Find the workflow run for the tag and wait for it:
+
+   ```powershell
+   gh run list --workflow release.yml --limit 3
+   gh run watch <id> --exit-status
+   ```
+
+   If it fails, show the user `gh run view <id> --log-failed`. A missing
+   `CURSEFORGE_API_TOKEN` Actions secret is the user's to add; once it's
+   fixed, retry with `gh workflow run release.yml -f tag=<ver>`.
+
+7. **Report.** Give the user the release URL and the workflow result, and
+   remind them to check the CurseForge project's Files tab (and replace the
+   generated changelog with the notes if they want them there).
 
 ## Flags
 
@@ -92,7 +105,8 @@ sees it). **Always dry-run first and get an explicit yes before the real run.**
   protects.
 - Ship-list rules match the `test-addon` skill: `.toc`-listed top-level
   files, plus `Libs\` and `Assets\` wholesale. If a new runtime dependency
-  appears that isn't `.toc`-listed, update **both** scripts.
-- Requires `gh` authenticated as an account with push access to the repo
-  (`gh auth status`). A 403 from `gh` or git means the wrong account is
-  active — see `gh auth switch`.
+  appears that isn't `.toc`-listed, update **both** scripts. If a new
+  top-level file appears that shouldn't ship, add it to `.pkgmeta`'s `ignore`.
+- The repo's GitHub account is usually not the active `gh` account. Before
+  running the script, set `GH_TOKEN` to that account's token so
+  `gh release create` has push access (`$env:GH_TOKEN = gh auth token -u puppysnuff`).
