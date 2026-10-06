@@ -82,7 +82,7 @@ BestAroundRevisited/
 
 Nothing else ships: no `.claude/`, `CLAUDE.md`, `RELEASING.md`, `TODO.md`,
 `LICENSE`, `embeds.xml`, `graphify-out/`, or `.git`. Do **not** upload GitHub's auto-generated source
-zip — its root folder is `wow-wikr-bestaroundrevisited-<tag>/`, which the game
+zip — its root folder is `bestaround-revisited-<tag>/`, which the game
 won't load.
 
 Always dry-run first, then publish with a title and a notes **file** (a
