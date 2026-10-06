@@ -14,13 +14,6 @@ time you level up or earn an achievement. When you die, it plays something more 
 - **Your volume, your channel.** Sounds play on the Master channel by default, or on SFX or Music if you
   want them to follow that slider.
 
-## Bundled sounds
-
-- *You're the Best*
-- Coffin Dance
-- Pac-Man death
-- Dumb Ways to Die, plus four shorter cuts: short, outro, "so many ways", and "hai hai hai"
-
 ## Setting it up
 
 Type `/bar` (or `/bestaround`), or go to **Options › AddOns › BestAround Revisited**. Each event has:
@@ -48,5 +41,3 @@ One download works on all of these:
 - **Mists of Pandaria Classic**
 - **Classic Era**
 - **WoW: Forever (Classic Plus)**
-
-Got a sound you'd love to hear when you ding? Leave a comment with your suggestion.
