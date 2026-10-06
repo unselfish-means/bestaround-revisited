@@ -1,0 +1,14 @@
+# Packaging rules for the BigWigs packager (.github/workflows/release.yml), which
+# runs on every pushed tag and uploads the result to CurseForge.
+# The addon is the repo root. Ship the .toc, the Lua files, README.md, Libs/,
+# and Assets/; ignore everything else at the top level. Dotfiles are ignored
+# automatically.
+package-as: BestAroundRevisited
+
+ignore:
+  - CLAUDE.md
+  - LICENSE
+  - RELEASING.md
+  - TODO.md
+  - embeds.xml
+  - graphify-out

@@ -1,7 +1,30 @@
 # Releasing
 
-How a change goes from a merged PR to a GitHub release and a CurseForge upload.
-There is no CI or packager — every step is manual, which is fine at this size.
+How a change goes from a merged PR to a GitHub release and a CurseForge file.
+
+## CurseForge packaging
+
+The [Package and release](.github/workflows/release.yml) workflow runs the
+[BigWigs packager](https://github.com/BigWigsMods/packager) on every pushed tag
+and uploads the result to CurseForge. It's the shared WIKR setup described in
+the `curseforge-packaging` runbook in `wow-addons-skill`.
+
+- **Every pushed tag** uploads as a **release** file. A tag containing `beta`
+  or `alpha` uploads as that type instead. Pushes to `main` upload nothing.
+- The project ID is `## X-Curse-Project-ID` in the `.toc`. The token is the
+  `CURSEFORGE_API_TOKEN` repository **Actions** secret (a Codespaces secret
+  doesn't reach workflows). If either is missing, the workflow fails.
+- The game versions come from every value in `## Interface`. The packager maps
+  each to its CurseForge game type, so one file covers Retail, MoP Classic,
+  Classic Era, and WoW: Forever.
+- [.pkgmeta](.pkgmeta) sets what ships: the same files as the release script's
+  ship list below. A new top-level file that shouldn't ship must be added to
+  its `ignore` list.
+- The file's display name is the bare tag. Its changelog is generated from the
+  commit messages since the previous tag.
+- To retry an upload, run the workflow by hand on the *Actions* tab with the
+  existing tag. That works only for tags whose `.toc` has `X-Curse-Project-ID`
+  (1.8.0 and earlier don't).
 
 ## Conventions
 
@@ -42,20 +65,22 @@ Both steps are done by the `release-addon` skill's script,
   can't leak in;
 - zips the **ship list only** under a `BestAroundRevisited/` root and
   verifies it before publishing;
-- creates the GitHub release with `gh release create --target <sha>`, which
-  creates the tag for you — never pre-tag.
+- tags the commit and pushes the tag with `git push`, which starts the
+  CurseForge workflow — never pre-tag;
+- creates the GitHub release on that tag with the zip attached.
 
 ```
 BestAroundRevisited/
   BestAroundRevisited.toc
   Core.lua
   Options.lua
+  README.md
   Libs/        (whole folder — the .toc lists only each lib's .xml entry point)
   Assets/      (whole folder — not .toc-listed, needed at runtime for sounds)
 ```
 
-Nothing else ships: no `.claude/`, `README.md`, `RELEASING.md`, `embeds.xml`,
-`graphify-out/`, or `.git`. Do **not** upload GitHub's auto-generated source
+Nothing else ships: no `.claude/`, `CLAUDE.md`, `RELEASING.md`, `TODO.md`,
+`LICENSE`, `embeds.xml`, `graphify-out/`, or `.git`. Do **not** upload GitHub's auto-generated source
 zip — its root folder is `wow-wikr-bestaroundrevisited-<tag>/`, which the game
 won't load.
 
@@ -88,27 +113,21 @@ Retail 12.1, Classic Beta 1.60, Classic Era 1.15, MoP Classic 5.5
 Download `BestAroundRevisited-<ver>.zip` and extract it into `Interface\AddOns\`.
 ```
 
-The script prints the release URL and the local path of the zip to upload to
-CurseForge. Verify with `gh release view <ver> --json tagName,targetCommitish,assets`.
-
-## Upload to CurseForge
-
-Manual, on the project page's *Upload File* form:
-
-1. **File**: the `BestAroundRevisited-<ver>.zip` you just attached to the
-   GitHub release — same bytes, so the two stay in sync.
-2. **Display name**: `<ver>` (e.g. `1.6.0`).
-3. **Release type**: Release (Beta only if the `.toc` targets a beta client you
-   haven't been able to test properly).
-4. **Game versions**: select every build listed in the `.toc`'s `## Interface`
-   line. CurseForge groups them by flavor (Retail / Classic Era / MoP Classic /
-   etc.); a brand-new client build may not be selectable yet — if so, upload
-   without it and note it in the changelog rather than picking a wrong version.
-5. **Changelog**: paste the GitHub release notes (Markdown is supported).
+The script prints the release URL. Verify with
+`gh release view <ver> --json tagName,targetCommitish,assets`.
 
 ## After releasing
 
 - Confirm the *Latest* badge on GitHub points at the new tag.
+- Check the *Package and release* run for the tag passed:
+  `gh run list --workflow release.yml`. If it failed, read the log
+  (`gh run view <id> --log-failed`), fix the cause, and retry from the
+  *Actions* tab with the tag.
+- On the CurseForge *Files* tab, check `<ver>` is a **Release** with every
+  client's game version. To show the player-facing notes, edit the file and
+  replace the generated changelog with the GitHub release notes.
+- If the release changes what players see, update [README.md](README.md) and
+  paste it into the CurseForge project's description.
 - Optionally delete the merged feature branch on GitHub.
 - If a client build was missing from CurseForge's version picker, check back
   after a few days and edit the file's game versions once it appears.
@@ -116,7 +135,7 @@ Manual, on the project page's *Upload File* form:
 ## Recovering from a bad release
 
 - **Wrong zip / wrong notes, tag is fine**: `gh release upload <ver> <zip> --clobber`
-  or `gh release edit <ver> --notes-file ...`. Re-upload to CurseForge as a new
-  file and archive the bad one there.
+  or `gh release edit <ver> --notes-file ...`. On CurseForge, edit or archive
+  the uploaded file.
 - **Bad code**: don't move the tag. Fix forward with a patch bump and a new
   release.

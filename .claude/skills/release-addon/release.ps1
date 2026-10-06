@@ -1,7 +1,9 @@
 <#
 .SYNOPSIS
-    Packages a CurseForge-ready zip of the addon from a git ref and (unless
-    -DryRun) publishes it as a GitHub release tagged with the .toc version.
+    Packages a zip of the addon from a git ref and (unless -DryRun) pushes a
+    tag with the .toc version and publishes a GitHub release on it. The tag
+    push runs the Package and release workflow, which uploads the tag to
+    CurseForge (see .github/workflows/release.yml).
 
 .DESCRIPTION
     The version is never passed in -- it is read from `## Version` in the .toc
@@ -139,12 +141,18 @@ try {
     }
 
     # --- Publish ---------------------------------------------------------------
-    # gh creates the tag at --target; do not pre-tag.
-    gh release create $Version $Zip --target $Sha --title $Title --notes-file $NotesFile --latest
-    if ($LASTEXITCODE -ne 0) { throw "gh release create failed" }
+    # Push the tag with git so the tag push starts the CurseForge workflow; then
+    # attach the GitHub release to that existing tag. The message makes the tag
+    # annotated, which the packager expects, and keeps tag.gpgsign working.
+    git tag -m "$AddonName $Version" $Version $Sha
+    if ($LASTEXITCODE -ne 0) { throw "git tag failed" }
+    git push origin "refs/tags/$Version"
+    if ($LASTEXITCODE -ne 0) { throw "git push of tag $Version failed" }
+    gh release create $Version $Zip --verify-tag --title $Title --notes-file $NotesFile --latest
+    if ($LASTEXITCODE -ne 0) { throw "gh release create failed (tag $Version is already pushed; retry with gh release create)" }
 
     Write-Host ""
-    Write-Host "Upload this file to CurseForge: $Zip"
+    Write-Host "The tag push started the CurseForge upload. Check it: gh run list --workflow release.yml"
 } finally {
     Pop-Location
 }
