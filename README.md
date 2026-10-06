@@ -7,12 +7,6 @@ Built on [Ace3](https://www.wowace.com/projects/ace3). One download works on eve
 
 ## What it does
 
-| Event | Default sound | Game event |
-|---|---|---|
-| **Level up** | "You're the Best" | `PLAYER_LEVEL_UP` |
-| **Achievement** | "You're the Best" | `ACHIEVEMENT_EARNED` |
-| **Death** | Dumb Ways to Die | `PLAYER_DEAD` |
-
 - Each event has its own on/off switch and its own set of sounds. An event with no sounds selected
   stays silent.
 - If an event fires again within 5 seconds, the repeat is ignored, so one death doesn't play
@@ -21,21 +15,6 @@ Built on [Ace3](https://www.wowace.com/projects/ace3). One download works on eve
   follow that volume slider instead.
 - Settings are saved per AceDB profile. You can switch, copy, or reset profiles under
   **Options › AddOns › BestAround Revisited › Profiles**.
-
-## Bundled sounds
-
-Each sound appears in the options by its file name:
-
-| File | Sound |
-|---|---|
-| `bestaround.mp3` | "You're the Best" (the addon's namesake) |
-| `coffin-dance.mp3` | Coffin Dance |
-| `pacman-death.mp3` | Pac-Man death |
-| `dumbwaystodie.mp3` | Dumb Ways to Die |
-| `dumbwaystodie-short.mp3` | Dumb Ways to Die (short) |
-| `dumbwaystodie-outro.mp3` | Dumb Ways to Die (outro) |
-| `dumbwaystodie-so-many-ways.mp3` | Dumb Ways to Die ("so many ways") |
-| `dumbwaystodie-hai-hai-hai.mp3` | Dumb Ways to Die ("hai hai hai") |
 
 ## Commands
 
