@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+[README.md](README.md) is the player-facing description, and it's also the description pasted into CurseForge. Keep development notes out of it; they belong here, in [RELEASING.md](RELEASING.md), or in files linked from here.
+
 ## Project overview
 
 "Best Around (Revisited)" is a World of Warcraft addon (author: WIKR) that plays an audio cue when the player levels up, earns an achievement, or dies. It's built on the [Ace3](https://www.wowace.com/projects/ace3) addon framework (vendored under `Libs/`). There is no build system, package manager, or automated test suite — WoW addons are plain Lua/XML loaded directly by the game client per the `.toc` manifest.
@@ -23,6 +25,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Settings live in `BestAround.db.profile` (an AceDB profile, so they're per-profile and support the Ace3 profile-switching UI). There is no longer a hand-rolled `config` table or manual slash-command toggles — all settings are read/written through the AceConfig options table's `get`/`set` functions, which is the single source of truth for both the GUI and any programmatic access.
 
+## Adding a sound
+
+Put the `.mp3` in `Assets/` and add it to `BestAround.sounds` in [Options.lua](Options.lua).
+
 ## Adding a new sound category (following the `achievements`/`levels`/`deaths` pattern)
 
 1. Add a `<category> = { enabled = true, sounds = { ["<file>.mp3"] = true } }` entry to `BestAround.defaults.profile` in Options.lua.
@@ -39,4 +45,18 @@ Releases are tagged with the bare version (`1.6.0`, no `v`), created with `gh re
 
 ## Testing
 
-There is no automated test suite. Verification is manual: load the addon in a WoW client (see `.toc` `## Interface` versions for supported client builds), then exercise it in-game via `/bar` (opens options), `/bar test`/`test level`/`test death`, the Blizzard AddOns options panel, leveling up, earning an achievement, or dying.
+There is no automated test suite. Verification is manual: load the addon in a WoW client (see `.toc` `## Interface` versions for supported client builds), then exercise it in-game via `/bar` (opens options), `/bar test`/`test level`/`test death`, the Blizzard AddOns options panel, leveling up, earning an achievement, or dying. The `test-addon` skill ([.claude/skills/test-addon](.claude/skills/test-addon/SKILL.md)) pushes a test build into the local retail and classic-beta clients.
+
+## CurseForge project
+
+Quick reference for the values on the [CurseForge project page](https://www.curseforge.com/projects/1043609) (project ID 1043609).
+
+| Field | Value |
+|---|---|
+| Project name | Best Around (Revisited) |
+| Summary | Plays a sound when you level up, earn an achievement, or die. Pick your own sounds for each. |
+| Description | Paste [README.md](README.md) (choose Markdown in the editor) |
+| Main category | Audio & Video |
+| Additional categories | Achievements, Quests & Leveling |
+| Game versions | Every build in the `.toc`'s `## Interface` line (Retail 12.1.0, 12.0.7, 11.0.7, 11.0.5; MoP Classic 5.5.0; Classic Era 1.15.6; WoW: Forever 1.60.1) |
+| License | AGPL-3.0 |
