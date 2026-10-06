@@ -20,7 +20,8 @@ the `curseforge-packaging` runbook in `wow-addons-skill`.
 - [.pkgmeta](.pkgmeta) sets what ships: the same files as the release script's
   ship list below. A new top-level file that shouldn't ship must be added to
   its `ignore` list.
-- The file's display name is the bare tag. Its changelog is generated from the
+- The file and its CurseForge display name are `BestAroundRevisited-<tag>`,
+  such as `BestAroundRevisited-1.8.2`. Its changelog is generated from the
   commit messages since the previous tag.
 - To retry an upload, run the workflow by hand on the *Actions* tab with the
   existing tag. That works only for tags whose `.toc` has `X-Curse-Project-ID`
