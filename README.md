@@ -40,32 +40,3 @@ The single `.toc` lists every client build it supports:
 | Mists of Pandaria Classic | 5.5.0 |
 | Classic Era | 1.15.6 |
 | WoW: Forever (Classic Plus) | 1.60.1 |
-
-## Development
-
-- **Files**: [Core.lua](Core.lua) holds the addon object, the event handlers, and the commands.
-  [Options.lua](Options.lua) holds the sound list, the profile defaults, and the options table.
-  [CLAUDE.md](CLAUDE.md) explains the architecture and how to add a new event.
-- **Libraries**: Ace3 is vendored in `Libs/`. `Libs/Ace3.lua`, `Libs/Ace3.toc`, and the root
-  `embeds.xml` aren't loaded by the addon.
-- **Adding a sound**: put the `.mp3` in `Assets/` and add it to `BestAround.sounds` in
-  [Options.lua](Options.lua).
-- **Testing**: there's no automated test suite. The `test-addon` skill
-  ([.claude/skills/test-addon](.claude/skills/test-addon/SKILL.md)) pushes a test build into the local
-  retail and classic-beta clients. Then check `/bar`, `/bar test level`, and `/bar test death` in game.
-- **Releasing**: see [RELEASING.md](RELEASING.md).
-
-## CurseForge project
-
-Quick reference for the values on the
-[CurseForge project page](https://www.curseforge.com/projects/1043609) (project ID 1043609).
-
-| Field | Value |
-|---|---|
-| Project name | Best Around (Revisited) |
-| Summary | Plays a sound when you level up, earn an achievement, or die. Pick your own sounds for each. |
-| Description | Paste [CURSEFORGE.md](CURSEFORGE.md) (choose Markdown in the editor) |
-| Main category | Audio & Video |
-| Additional categories | Achievements, Quests & Leveling |
-| Game versions | Every build in the `.toc`'s `## Interface` line (see [Supported clients](#supported-clients)) |
-| License | AGPL-3.0 |
