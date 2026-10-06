@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+[README.md](README.md) is the player-facing description, and it's also the description pasted into CurseForge. Keep development notes out of it; they belong here, in [RELEASING.md](RELEASING.md), or in files linked from here.
+
 ## Project overview
 
 "Best Around (Revisited)" is a World of Warcraft addon (author: WIKR) that plays an audio cue when the player levels up, earns an achievement, or dies. It's built on the [Ace3](https://www.wowace.com/projects/ace3) addon framework (vendored under `Libs/`). There is no build system, package manager, or automated test suite — WoW addons are plain Lua/XML loaded directly by the game client per the `.toc` manifest.
@@ -53,8 +55,8 @@ Quick reference for the values on the [CurseForge project page](https://www.curs
 |---|---|
 | Project name | Best Around (Revisited) |
 | Summary | Plays a sound when you level up, earn an achievement, or die. Pick your own sounds for each. |
-| Description | Paste [CURSEFORGE.md](CURSEFORGE.md) (choose Markdown in the editor) |
+| Description | Paste [README.md](README.md) (choose Markdown in the editor) |
 | Main category | Audio & Video |
 | Additional categories | Achievements, Quests & Leveling |
-| Game versions | Every build in the `.toc`'s `## Interface` line (see [Supported clients](README.md#supported-clients)) |
+| Game versions | Every build in the `.toc`'s `## Interface` line (Retail 12.1.0, 12.0.7, 11.0.7, 11.0.5; MoP Classic 5.5.0; Classic Era 1.15.6; WoW: Forever 1.60.1) |
 | License | AGPL-3.0 |
