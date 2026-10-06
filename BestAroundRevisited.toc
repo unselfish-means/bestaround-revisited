@@ -3,6 +3,7 @@
 ## Notes: You're the Best Around!
 ## Author: WIKR
 ## Version: 1.8.0
+## X-Curse-Project-ID: 1043609
 ## SavedVariables: BestAroundRevisitedDB
 
 Libs\LibStub\LibStub.lua
