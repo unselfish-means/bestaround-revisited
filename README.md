@@ -5,8 +5,7 @@ time you level up or earn an achievement. When you die, it plays something more 
 
 ## What it does
 
-- **Level up** and **achievement** play *You're the Best* by default.
-- **Death** plays *Dumb Ways to Die* by default.
+- **Sounds on events.** Plays a special notification sound when a player levels, dies, or earns an achievement.
 - **Pick your own sounds.** Each event has a checklist of sounds. Check as many as you like and a random
   one plays each time. Leave the list empty to silence that event.
 - **No pile-ups.** If the same event fires again within a few seconds, for example dying twice in a void
