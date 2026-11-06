@@ -1,8 +1,10 @@
 <#
 .SYNOPSIS
     Mirrors a clean copy of the addon (as defined by the .toc) into the local
-    WoW retail and classic-beta AddOns folders, so in-game testing reflects
-    what a fresh install/download would actually contain.
+    WoW retail and Forever AddOns folders, so in-game testing reflects what a
+    fresh install/download would actually contain. It installs as
+    BestAroundRevisited-Test (folder, .toc, and title), so it can sit beside a
+    CurseForge install of the release; enable one at a time in-game.
 #>
 
 $ErrorActionPreference = "Stop"
@@ -11,7 +13,8 @@ $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..\..")
 $TocPath = Join-Path $RepoRoot "BestAroundRevisited.toc"
 $AddonName = [System.IO.Path]::GetFileNameWithoutExtension($TocPath)
 $WowRoot = "F:\Blizzard\World of Warcraft"
-$Clients = @("_retail_", "_classic_beta_")
+$Clients = @("_retail_", "_forever_")
+$TestName = "$AddonName-Test"
 
 if (-not (Test-Path $TocPath)) {
     throw "Could not find $TocPath"
@@ -42,10 +45,15 @@ foreach ($client in $Clients) {
     if (-not (Test-Path $AddonsRoot)) {
         throw "AddOns folder not found at $AddonsRoot -- is the $client client installed there?"
     }
-    $Dest = Join-Path $AddonsRoot $AddonName
+    $Dest = Join-Path $AddonsRoot $TestName
 
     Write-Host "Mirroring $AddonName -> $Dest"
 
+    # Wiping through a link would delete the link's target.
+    $existing = Get-Item $Dest -ErrorAction SilentlyContinue
+    if ($existing -and $existing.LinkType) {
+        throw "$Dest is a link. Remove it, then push again."
+    }
     if (Test-Path $Dest) {
         Remove-Item -Recurse -Force -Confirm:$false $Dest
     }
@@ -68,6 +76,11 @@ foreach ($client in $Clients) {
         Copy-Item -Recurse -Force $assetsSrc (Join-Path $Dest "Assets")
         Write-Host "Copied Assets\ ($((Get-ChildItem -Recurse -File $assetsSrc).Count) file(s))"
     }
+
+    $destToc = Join-Path $Dest "$TestName.toc"
+    Move-Item (Join-Path $Dest "$AddonName.toc") $destToc -Force
+    $tocText = [IO.File]::ReadAllText($destToc) -replace '(?m)^(## Title(?:-\w+)?:[ \t]*)(.+?)(\r?)$', '${1}${2}-Test${3}'
+    [IO.File]::WriteAllText($destToc, $tocText)
 
     Write-Host "Copied $($filesToCopy.Count) .toc-listed file(s)."
 }

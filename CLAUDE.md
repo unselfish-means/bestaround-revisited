@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - `ChatCommand` handles `/bar test[s|s achievement|test level|test death]` (plays the corresponding category sound directly) and otherwise opens the AceConfig options dialog.
 - [Options.lua](Options.lua) — defines `BestAround.sounds` (available sound file names), `BestAround.defaults` (AceDB profile defaults: one sub-table per category — `achievements`, `levels`, `deaths` — each with `enabled` and a `sounds` set), and `BestAround.options` (the AceConfig options table: sound channel selector, plus one inline group per category with an enable toggle, a `multiselect` sound dropdown, and test button). Both tables are populated onto the `BestAround` global that `Core.lua` creates — load order in the `.toc` (Core.lua before Options.lua) means `Core.lua` must not read `self.defaults`/`self.options` until after Options.lua has run (i.e. not at file scope).
 - [Libs/](Libs/) — vendored Ace3 framework libraries (AceAddon, AceConfig, AceDB, AceConsole, AceEvent, AceGUI, etc.), each with its own `.lua`/`.xml`. Referenced individually by the top-level `.toc`. `Libs/Ace3.lua`/`Libs/Ace3.toc` and the root [embeds.xml](embeds.xml) are leftover standalone-Ace3 dev-tooling artifacts (a `/ace3` config browser, `/rl` reload-UI binding) — they are **not** referenced by `BestAroundRevisited.toc` and are not part of the loaded addon.
-- [Assets/](Assets/) — audio files referenced by relative path in `Options.lua`'s `sounds` table and joined with `baseSoundPath` (`Interface\AddOns\BestAroundRevisited\Assets\`) at play time.
+- [Assets/](Assets/) — audio files referenced by relative path in `Options.lua`'s `sounds` table and joined with `baseSoundPath` (`Interface\AddOns\<addon folder>\Assets\`, from the folder the addon loaded from, so `-Test` builds find their sounds) at play time.
 
 ## Config model
 
@@ -45,7 +45,7 @@ Releases are tagged with the bare version (`1.6.0`, no `v`) and ship a `BestArou
 
 ## Testing
 
-There is no automated test suite. Verification is manual: load the addon in a WoW client (see `.toc` `## Interface` versions for supported client builds), then exercise it in-game via `/bar` (opens options), `/bar test`/`test level`/`test death`, the Blizzard AddOns options panel, leveling up, earning an achievement, or dying. The `test-addon` skill ([.claude/skills/test-addon](.claude/skills/test-addon/SKILL.md)) pushes a test build into the local retail and classic-beta clients.
+There is no automated test suite. Verification is manual: load the `BestAroundRevisited-Test` build (the `test-addon` skill) in a WoW client (see `.toc` `## Interface` versions for supported client builds), then exercise it in-game via `/bar` (opens options), `/bar test`/`test level`/`test death`, the Blizzard AddOns options panel, leveling up, earning an achievement, or dying. The `test-addon` skill ([.claude/skills/test-addon](.claude/skills/test-addon/SKILL.md)) pushes a test build into the local retail and classic-beta clients.
 
 ## CurseForge project
 
