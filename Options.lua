@@ -1,3 +1,5 @@
+local ADDON_NAME = ...
+
 BestAround.sounds = {
     ["bestaround.mp3"] = "bestaround.mp3",
     ["coffin-dance.mp3"] = "coffin-dance.mp3",
@@ -11,7 +13,7 @@ BestAround.sounds = {
 
 BestAround.defaults = {
     profile = {
-        baseSoundPath = 'Interface\\AddOns\\BestAroundRevisited\\Assets\\',
+        baseSoundPath = 'Interface\\AddOns\\' .. ADDON_NAME .. '\\Assets\\',
         soundChannel = "Master",
         -- `sounds` is a set of file name -> true. One is picked at random each
         -- time the event fires; an empty set means the event plays nothing.

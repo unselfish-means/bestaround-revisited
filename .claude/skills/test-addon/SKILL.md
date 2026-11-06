@@ -1,13 +1,18 @@
 ---
 name: test-addon
-description: Push a clean test build of BestAroundRevisited into the local WoW retail and classic-beta AddOns folders for in-game testing. Use when the user asks to test the addon, push a test build, or wants to try their changes in-game.
+description: Push a clean BestAroundRevisited-Test build into the local WoW retail and Forever AddOns folders for in-game testing. Use when the user asks to test the addon, push a test build, or wants to try their changes in-game.
 ---
 
 # Test Addon
 
 Deploys a clean, deliberate test build of this addon into the local WoW
-retail and classic-beta clients so it can be tested in-game. This is a manual
+retail and Forever clients so it can be tested in-game. This is a manual
 checkpoint, not an auto-sync — run it when you're ready to test, not on every save.
+
+The build installs as `BestAroundRevisited-Test` (folder, `.toc`, and title), so
+it can sit beside a CurseForge install of the release. Enable one at a time in the
+game's AddOns list. Saved variables are named after the folder, so the test build's
+settings are separate from the release's.
 
 ## What it does
 
@@ -15,8 +20,8 @@ Runs [push-test-build.ps1](push-test-build.ps1), which:
 
 1. Reads `BestAroundRevisited.toc` and extracts the list of files it
    declares (skipping comments/directives).
-2. For each client (`_retail_`, `_classic_beta_`), **wipes**
-   `F:\Blizzard\World of Warcraft\<client>\Interface\AddOns\BestAroundRevisited\`
+2. For each client (`_retail_`, `_forever_`), **wipes**
+   `F:\Blizzard\World of Warcraft\<client>\Interface\AddOns\BestAroundRevisited-Test\`
    before copying anything, so stale files from a previous test build can
    never linger and mask a packaging bug. This matters because the goal is
    to mirror what a fresh install/download would actually contain, not just
@@ -30,7 +35,9 @@ Runs [push-test-build.ps1](push-test-build.ps1), which:
    listed files silently drops every library's actual code. `Assets\` isn't
    `.toc`-listed at all (it's not Lua/XML to load) but is required at runtime
    for sound playback.
-4. Prints a summary of what was copied.
+4. Renames the copied `.toc` to `BestAroundRevisited-Test.toc` and adds `-Test` to
+   its title.
+5. Prints a summary of what was copied.
 
 ## When to use
 
@@ -52,7 +59,7 @@ have drifted apart.
 
 ## Notes
 
-- Retail and classic beta only (`_retail_`, `_classic_beta_`). Add to the
+- Retail and Forever only (`_retail_`, `_forever_`). Add to the
   script's `$Clients` list for other clients (Classic Era, PTR, ...).
 - If `Assets\` ever needs anything beyond audio files, or if another
   runtime dependency shows up that isn't `.toc`-listed, update the script's

@@ -48,8 +48,9 @@ the `curseforge-packaging` runbook in `wow-addons-skill`.
 3. The build has been exercised in-game on the clients you're claiming support
    for — at minimum `/bar` (options panel: hover, dropdown, toggle, Test) plus
    `/bar test level` and `/bar test death`. Use the `test-addon` skill
-   (`.claude/skills/test-addon/push-test-build.ps1`) for the retail folder; for
-   other flavors copy the ship list into that flavor's `Interface\AddOns\`.
+   (`.claude/skills/test-addon/push-test-build.ps1`), which pushes a
+   `BestAroundRevisited-Test` build to `_retail_` and `_forever_`; add other
+   flavors to its `$Clients` list.
 4. If `Libs/` changed, check upstream's `Libs/Ace3.toc` `## Interface` line
    overlaps the clients you're targeting.
 
